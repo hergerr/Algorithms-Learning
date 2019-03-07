@@ -8,21 +8,29 @@ using namespace std;
 
 
 class Table {
-    int *tab;
-    int cnt; //ilość elementów w tablicy
-    vector<int> numbers;
+    int *numbers;
+    int size; //ilość elementów w tablicy
 
 public:
+    Table() {
+//        this->size = size;
+//        numbers = new int[size];
+    }
+
+    ~Table() {
+        delete[] numbers;
+    }
 
     void loadFromFile(string fileName) {
-        ifstream in(fileName, ios::in);
+        ifstream file(fileName);
         int number;
 
-        //Read number using the extraction (>>) operator
-        while (in >> number) {
-            numbers.push_back(number);
+        int counter = 0;
+        while (counter < size) {
+            file >> numbers[counter];
+            counter++;
         }
-        in.close();
+        file.close();
     }
 
     bool IsValueInTable(int val) {
@@ -35,18 +43,25 @@ public:
     }
 
     void deleteFromTable(int index) {
-
+        for (int i = index; i < size; ++i) {
+            numbers[i] = numbers[i + 1];
+        }
     }
 
     void display() {
-        cout << "Zawartosc pliku:\n";
-        for (int i = 0; i < numbers.size(); i++) {
+        cout << "Zawartosc tablicy:\n";
+        for (int i = 0; i < size; i++) {
             cout << numbers[i] << '\n';
         }
     }
 
     void generateTable(int size) {
-
+        this->size = size;
+        srand(381209);
+        numbers = new int(size);
+        for (int i = 0; i < size; ++i) {
+            numbers[i] = (rand() % 10) + 1;
+        }
     }
 };
 
@@ -65,37 +80,36 @@ void displayMenu(string info) {
     cout << "Podaj opcje:";
 }
 
-Table myTab;
-
 void menu_table() {
     char opt;
     string fileName;
     int index, value;
+    Table myTab;
 
 
     do {
         displayMenu("--- TABLICA ---");
-        opt = getche();
+        cin >> opt;
         cout << endl;
         switch (opt) {
             case '1': //tutaj wczytytwanie  tablicy z pliku
-                cout << " Podaj nazwe pliku:";
+                cout << "Podaj nazwe pliku:";
                 cin >> fileName;
                 myTab.loadFromFile(fileName);
                 myTab.display();
                 break;
 
             case '2': //tutaj usuwanie elemenu z tablicy
-                cout << " podaj index:";
+                cout << "podaj index:";
                 cin >> index;
                 myTab.deleteFromTable(index);
                 myTab.display();
                 break;
 
             case '3': //tutaj dodawanie elemetu do tablicy
-                cout << " podaj index:";
+                cout << "podaj index:";
                 cin >> index;
-                cout << " podaj waertość:";
+                cout << "podaj waertość:";
                 cin >> value;
 
                 myTab.addValue(index, value);
@@ -103,12 +117,12 @@ void menu_table() {
                 break;
 
             case '4': //tutaj znajdowanie elemetu w tablicy
-                cout << " podaj waertość:";
+                cout << "podaj waertość:";
                 cin >> value;
                 if (myTab.IsValueInTable(value))
                     cout << "poadana wartośc jest w tablicy";
                 else
-                    cout << "poadanej wartości NIE ma w tablicy";
+                    cout << "pozadanej wartości NIE ma w tablicy";
                 break;
 
             case '5':  //tutaj generowanie  tablicy
@@ -149,7 +163,7 @@ int main(int argc, char *argv[]) {
         cout << "3.Kopiec" << endl;
         cout << "0.Wyjscie" << endl;
         cout << "Podaj opcje:";
-        option = getche();
+        cin >> option;
         cout << endl;
 
         switch (option) {

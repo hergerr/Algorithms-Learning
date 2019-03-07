@@ -12,9 +12,7 @@ class Table {
     int size; //ilość elementów w tablicy
 
 public:
-    Table() {
-//        this->size = size;
-//        numbers = new int[size];
+    Table(){
     }
 
     ~Table() {
@@ -22,43 +20,79 @@ public:
     }
 
     void loadFromFile(string fileName) {
-        ifstream file(fileName);
-        int number;
 
-        int counter = 0;
-        while (counter < size) {
-            file >> numbers[counter];
-            counter++;
+        ifstream inFile;
+        inFile.open(fileName);
+        if (!inFile) {
+            cout << "Nie można otworzyć pliku\n";
+            exit(1); // terminate with error
         }
-        file.close();
+
+        inFile >> size;
+        numbers = new int [size];
+
+        int i = 0;
+        while(i++ < size){
+            inFile >> *(numbers + i - 1);
+       //     printf("%d %d\n", element, numbers[i]);
+        }
+
     }
 
     bool IsValueInTable(int val) {
-        return 0;
-
+        for (int i = 0; i < size; ++i) {
+            if(numbers[i] == val) return true;
+        }
+        return false;
     }
 
     void addValue(int index, int value) {
 
+        int * newArray = new int[++size];
+
+        printf("size = %d\n", size);
+        for(int i = 0; i < index; ++i) {
+            newArray[i] = numbers[i];
+        }
+        newArray[index] = value;
+        for (int i = index; i < size; ++i) {
+            newArray[i + 1] = numbers[i];
+        }
+
+
+        delete[] numbers;
+        int elementsOfTab = sizeof(numbers);
+        numbers = newArray;
+
+        printf("Rozmar de facto %d\n", elementsOfTab);
     }
 
     void deleteFromTable(int index) {
-        for (int i = index; i < size; ++i) {
-            numbers[i] = numbers[i + 1];
+        int * newArray = new int [--size];
+
+        for(int i = 0; i < index; ++i) {
+            newArray[i] = numbers[i];
         }
+        for (int i = index + 1; i <= size; ++i) {
+            newArray[i - 1] = numbers[i];
+        }
+
+        delete[] numbers;
+
+        numbers = newArray;
     }
 
     void display() {
         cout << "Zawartosc tablicy:\n";
         for (int i = 0; i < size; i++) {
-            cout << numbers[i] << '\n';
+            cout << *(numbers + i) << '\n';
         }
     }
 
     void generateTable(int size) {
         this->size = size;
-        srand(381209);
-        numbers = new int(size);
+        srand( 42 );
+        numbers = new int[size];
         for (int i = 0; i < size; ++i) {
             numbers[i] = (rand() % 10) + 1;
         }
@@ -81,6 +115,7 @@ void displayMenu(string info) {
 }
 
 void menu_table() {
+
     char opt;
     string fileName;
     int index, value;
@@ -109,7 +144,7 @@ void menu_table() {
             case '3': //tutaj dodawanie elemetu do tablicy
                 cout << "podaj index:";
                 cin >> index;
-                cout << "podaj waertość:";
+                cout << "podaj wartosc:";
                 cin >> value;
 
                 myTab.addValue(index, value);
@@ -117,16 +152,14 @@ void menu_table() {
                 break;
 
             case '4': //tutaj znajdowanie elemetu w tablicy
-                cout << "podaj waertość:";
+                cout << "podaj wartosc:" << endl;
                 cin >> value;
-                if (myTab.IsValueInTable(value))
-                    cout << "poadana wartośc jest w tablicy";
-                else
-                    cout << "pozadanej wartości NIE ma w tablicy";
+                if (myTab.IsValueInTable(value)) cout << "podana wartosc jest w tablicy";
+                else  cout << "podanej wartosci NIE ma w tablicy";
                 break;
 
             case '5':  //tutaj generowanie  tablicy
-                cout << "Podaj ilość elementów tablicy:";
+                cout << "Podaj ilosc elementow tablicy:";
                 cin >> value;
                 myTab.generateTable(value);
                 myTab.display();

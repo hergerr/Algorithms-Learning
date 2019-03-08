@@ -3,4 +3,6 @@ cmake-build-*/
 *.txt
 *.iws
 out/
+venv/
+__pycache__/
 

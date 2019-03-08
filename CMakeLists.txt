@@ -3,4 +3,4 @@ project(Algorithms_Learning)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Algorithms_Learning array.cpp)
+add_executable(Algorithms_Learning main.cpp Table.cpp)

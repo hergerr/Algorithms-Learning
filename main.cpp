@@ -1,4 +1,5 @@
 #include "Table.cpp"
+#include "List.cpp"
 
 using namespace std;
 
@@ -51,9 +52,7 @@ void menu_table() {
                 cin >> index;
                 cout << "podaj wartosc:";
                 cin >> value;
-
                 myTab.addValue(index, value);
-                myTab.display();
                 break;
 
             case '4': //tutaj znajdowanie elemetu w tablicy
@@ -83,7 +82,52 @@ void menu_table() {
 }
 
 void menu_list() {
-    //analogicznie jak menu_table()
+    char opt;
+    string fileName;
+    int index, value;
+    List myList;
+
+
+    do {
+        displayMenu("--- LISTA ---");
+        cin >> opt;
+        cout << endl;
+        switch (opt) {
+            case '1': //tutaj wczytytwanie  tablicy z pliku
+                cout << "Podaj nazwe pliku:";
+                cin >> fileName;
+                break;
+
+            case '2': //tutaj usuwanie elemenu z tablicy
+                cout << "podaj index:";
+                cin >> index;
+                break;
+
+            case '3': //tutaj dodawanie elemetu do końca listy
+                cout << "podaj wartosc:";
+                cin >> value;
+                myList.addValueToTheEnd(value);
+                break;
+
+            case '4': //tutaj znajdowanie elemetu w tablicy
+                cout << "podaj wartosc:" << endl;
+                cin >> value;
+                break;
+
+            case '5':  //tutaj generowanie  tablicy
+                cout << "Podaj ilosc elementow tablicy:";
+                cin >> value;
+                break;
+
+            case '6':  //tutaj wyświetlanie tablicy
+                myList.display();
+                break;
+
+            case '7': //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
+                break;
+        }
+
+    } while (opt != '0');
 }
 
 void menu_heap() {
@@ -110,6 +154,7 @@ int main(int argc, char *argv[]) {
                 break;
 
             case '2':
+                menu_list();
                 break;
 
             case '3':

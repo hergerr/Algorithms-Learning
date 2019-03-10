@@ -1,9 +1,3 @@
-#include<string>
-#include<iostream>
-#include<fstream>
-#include<vector>
-#include <stdio.h>
-#include <string.h>
 #include "Table.cpp"
 
 using namespace std;
@@ -81,7 +75,7 @@ void menu_table() {
                 break;
 
             case '7': //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
-                // można sobie tu dodać własne case'y
+                myTab.test();
                 break;
         }
 

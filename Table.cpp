@@ -35,7 +35,7 @@ public:
 
     }
 
-    bool IsValueInTable(int val) {
+    bool isValueInTable(int val) {
         for (int i = 0; i < size; ++i) {
             if (numbers[i] == val) return true;
         }
@@ -43,15 +43,19 @@ public:
     }
 
     void addValue(int index, int value) {
-
         int *newArray = new int[++size];
 
-        for (int i = 0; i < index; ++i) {
-            newArray[i] = numbers[i];
+        if(index >= size){
+            //dodawanie na koniec listy
+            index = size;
+
         }
         newArray[index] = value;
-        for (int i = index; i < size; ++i) {
-            newArray[i + 1] = numbers[i];
+        for (int i = 0; i < index; i++) {
+            newArray[i] = numbers[i];
+        }
+        for (int i = index + 1; i < size; i++) {
+            newArray[i] = numbers[i-1];
         }
 
         delete[] numbers;
@@ -90,14 +94,12 @@ public:
     }
 
     void test() {
-//        Wypisywanie wartosci
         auto start = chrono::high_resolution_clock::now();
         display();
         auto end = chrono::high_resolution_clock::now();
         chrono::duration<double> diff = end - start;
-        cout << "Wypisywanie wartosci tablicy: " << diff.count() << endl;
+        cout << "Wypisywanie wartosci tablicy: " << diff.count() << endl << endl;
 
-//        Wstawienie wartosci na poczatek
         cout << "Wstawianie nowej wartości na początek: ";
         start = chrono::high_resolution_clock::now();
         addValue(0, 0);
@@ -105,21 +107,52 @@ public:
         diff = end - start;
         cout << diff.count() << endl;
 
-//        Wstawienie wartosci na koniec
+
         cout << "Wstawianie nowej wartości na koniec: ";
         start = chrono::high_resolution_clock::now();
-        addValue(size, 0);
+        addValue(size-1, 0);
         end = chrono::high_resolution_clock::now();
         diff = end - start;
         cout << diff.count() << endl;
 
-        //        Wstawienie wartosci w losowe miejsce w tablicy
         cout << "Wstawianie nowej wartości w losowe miejsce w tablicy: ";
         start = chrono::high_resolution_clock::now();
-        addValue(rand() % size, 0);
+        addValue(rand() % size-1, 0);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl << endl;
+
+        cout << "Usuwanie wartości z początku tablicy: ";
+        start = chrono::high_resolution_clock::now();
+        deleteFromTable(0);
         end = chrono::high_resolution_clock::now();
         diff = end - start;
         cout << diff.count() << endl;
+
+
+        cout << "Usuwanie wartości z końca tablicy: ";
+        start = chrono::high_resolution_clock::now();
+        deleteFromTable(size-1);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl;
+
+        cout << "Usuwanie wartości z losowego miejsca w tablicy: ";
+        start = chrono::high_resolution_clock::now();
+        deleteFromTable(rand() % (size-1));
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl << endl;
+
+        cout << "Wyszukiwanie losowej wartosci z tablicy:" << endl;
+        start = chrono::high_resolution_clock::now();
+        int rand_val = rand() % 1000000;
+        bool is_in = isValueInTable(rand_val);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        if(is_in) cout << "Wartosc" << rand_val << " jest w tablicy " << endl;
+        else cout << "Wartosci: " << rand_val << " nie ma w tablicy " << endl;
+        cout << "Czas: " << diff.count() << endl << endl;
 
     }
 };

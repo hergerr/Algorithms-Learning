@@ -59,7 +59,7 @@ void menu_table() {
             case '4': //tutaj znajdowanie elemetu w tablicy
                 cout << "podaj wartosc:" << endl;
                 cin >> value;
-                if (myTab.IsValueInTable(value)) cout << "podana wartosc jest w tablicy";
+                if (myTab.isValueInTable(value)) cout << "podana wartosc jest w tablicy";
                 else  cout << "podanej wartosci NIE ma w tablicy";
                 break;
 

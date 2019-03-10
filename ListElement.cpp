@@ -1,5 +1,3 @@
-using namespace std;
-
 class ListElement {
     int number;
     ListElement *next;

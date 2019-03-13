@@ -25,6 +25,7 @@ public:
         if (head == NULL) { //ustawiamy head na poczatek i on tam bedzie zawsze
             head = temp;
             tail = temp;
+            temp = NULL;
         } else { // przestawiamy tail na koniec
             tail->setNext(temp); // dodanie połączenia obecnego taila z nowym koncem
             tail = temp; // ustawienie taila na koniec
@@ -46,7 +47,6 @@ public:
         for (int i = 0; i < index; i++) {
             previous = current;
             current = current->getNext();
-            if (current->getNext() == NULL) break; // jesli nastepny jest poza rozmiarem to dodaj na koniec
         }
         temp->setNumber(value);
         previous->setNext(temp);
@@ -80,6 +80,7 @@ public:
         for (int i = 0; i < index; i++) {
             previous = current;
             current = current->getNext();
+
         }
         previous->setNext(current->getNext()); // pomieniecie elementu o danym indeksie
     }

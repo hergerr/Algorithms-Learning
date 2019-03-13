@@ -9,12 +9,6 @@ class Table {
     int size; //ilość elementów w tablicy
 
 public:
-    Table() {
-    }
-
-    ~Table() {
-        delete[] numbers;
-    }
 
     void loadFromFile(string fileName) {
 

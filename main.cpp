@@ -39,7 +39,7 @@ void displayMenu(string info) {
 
 void menu_table() {
 
-    char opt;
+    int opt;
     string fileName;
     int index, value;
     Table myTab;
@@ -50,21 +50,21 @@ void menu_table() {
         cin >> opt;
         cout << endl;
         switch (opt) {
-            case '1': //tutaj wczytytwanie  tablicy z pliku
+            case 1: //tutaj wczytytwanie  tablicy z pliku
                 cout << "Podaj nazwe pliku:";
                 cin >> fileName;
                 myTab.loadFromFile(fileName);
                 myTab.display();
                 break;
 
-            case '2': //tutaj usuwanie elemenu z tablicy
+            case 2: //tutaj usuwanie elemenu z tablicy
                 cout << "podaj index:";
                 cin >> index;
                 myTab.deleteFromTable(index);
                 myTab.display();
                 break;
 
-            case '3': //tutaj dodawanie elemetu do tablicy
+            case 3: //tutaj dodawanie elemetu do tablicy
                 cout << "podaj index:";
                 cin >> index;
                 cout << "podaj wartosc:";
@@ -72,30 +72,30 @@ void menu_table() {
                 myTab.addValue(index, value);
                 break;
 
-            case '4': //tutaj znajdowanie elemetu w tablicy
+            case 4: //tutaj znajdowanie elemetu w tablicy
                 cout << "podaj wartosc:" << endl;
                 cin >> value;
                 if (myTab.isValueInTable(value)) cout << "podana wartosc jest w tablicy";
                 else cout << "podanej wartosci NIE ma w tablicy";
                 break;
 
-            case '5':  //tutaj generowanie  tablicy
+            case 5:  //tutaj generowanie  tablicy
                 cout << "Podaj ilosc elementow tablicy:";
                 cin >> value;
                 myTab.generateTable(value);
                 myTab.display();
                 break;
 
-            case '6':  //tutaj wyświetlanie tablicy
+            case 6:  //tutaj wyświetlanie tablicy
                 myTab.display();
                 break;
 
-            case '7': //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
+            case 7: //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
                 myTab.test();
                 break;
         }
 
-    } while (opt != '0');
+    } while (opt != 0);
 }
 
 void menu_list() {
@@ -147,18 +147,18 @@ void menu_list() {
             case 7: //tutaj usuwanie elemenu z dowolnego miejsca
                 cout << "Podaj index: ";
                 cin >> index;
-                myList.deleteValueOnThePosition(value);
+                myList.deleteValueOnThePosition(index);
                 break;
 
             case 8: //tutaj znajdowanie elemetu w liscie
                 cout << "podaj wartosc:" << endl;
                 cin >> value;
-                if (myList.isValueInList(value)) cout << "podana wartosc jest w tablicy";
-                else cout << "podanej wartosci NIE ma w tablicy";
+                if (myList.isValueInList(value)) cout << "podana wartosc jest w liscie";
+                else cout << "podanej wartosci NIE ma w liscie";
                 break;
 
             case 9:  //tutaj generowanie  tablicy
-                cout << "Podaj ilosc elementow tablicy:";
+                cout << "Podaj ilosc elementow liscie:";
                 cin >> value;
                 myList.generateList(value);
                 break;
@@ -172,7 +172,7 @@ void menu_list() {
                 break;
         }
 
-    } while (opt != '0');
+    } while (opt != 0);
 }
 
 void menu_heap() {

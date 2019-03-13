@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include<chrono>
 #include "ListElement.cpp"
 
 using namespace std;
@@ -24,18 +25,17 @@ public:
         if (head == NULL) { //ustawiamy head na poczatek i on tam bedzie zawsze
             head = temp;
             tail = temp;
-            temp = NULL;
         } else { // przestawiamy tail na koniec
-            tail->setNext(temp);
-            tail = temp; // ?
+            tail->setNext(temp); // dodanie połączenia obecnego taila z nowym koncem
+            tail = temp; // ustawienie taila na koniec
         }
     }
 
     void addValueToTheStart(int value) {
         ListElement *temp = new ListElement;
         temp->setNumber(value);
-        temp->setNext(head);
-        head = temp; // ?
+        temp->setNext(head); // ustawinie wskaznika na obecnie drugi element
+        head = temp; // ustawienie head na pierwsza pozycje
     }
 
     void addValueOnPosition(int value, int index) {
@@ -46,6 +46,7 @@ public:
         for (int i = 0; i < index; i++) {
             previous = current;
             current = current->getNext();
+            if (current->getNext() == NULL) break; // jesli nastepny jest poza rozmiarem to dodaj na koniec
         }
         temp->setNumber(value);
         previous->setNext(temp);
@@ -54,8 +55,8 @@ public:
 
     void deleteFirst() {
         ListElement *temp = new ListElement;
-        temp = head;
-        head = head->getNext();
+        temp = head; // ustawienie obecneego heada na temp
+        head = head->getNext(); // przestawienie head na kolojena pozycje
         delete temp;
     }
 
@@ -67,8 +68,8 @@ public:
             previous = current;
             current = current->getNext();
         }
-        tail = previous;
-        previous->setNext(NULL);
+        tail = previous; // przypisanie obecnego taila do przedostatniego elementu
+        previous->setNext(NULL); // przedostatni element wskazuje na null -> staje sie ostatnim elementem
         delete current;
     }
 
@@ -80,7 +81,7 @@ public:
             previous = current;
             current = current->getNext();
         }
-        previous->setNext(current->getNext());
+        previous->setNext(current->getNext()); // pomieniecie elementu o danym indeksie
     }
 
     void display() {
@@ -112,14 +113,83 @@ public:
     }
 
     bool isValueInList(int val) {
-
+        ListElement *current = new ListElement;
+        current = head;
+        while (current->getNext() != NULL) {
+            if ((*current).getNumber() == val) return true;
+            current = current->getNext();
+        }
+        return false;
     }
 
 
     void generateList(int size) {
+        srand(42);
+        for (int i = 0; i < size; ++i) {
+            addValueToTheStart((rand() % 10) + 1);
+        }
     }
 
 
     void test() {
+        auto start = chrono::high_resolution_clock::now();
+        display();
+        auto end = chrono::high_resolution_clock::now();
+        chrono::duration<double> diff = end - start;
+        cout << "Wypisywanie wartosci listy: " << diff.count() << endl << endl;
+
+        cout << "Wstawianie nowej wartości na początek: ";
+        start = chrono::high_resolution_clock::now();
+        addValueToTheStart(0);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl;
+
+
+        cout << "Wstawianie nowej wartości na koniec: ";
+        start = chrono::high_resolution_clock::now();
+        addValueToTheEnd(0);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl;
+
+        cout << "Wstawianie nowej wartości w losowe miejsce listy: ";
+        start = chrono::high_resolution_clock::now();
+        addValueOnPosition(0, rand() % 100);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl << endl;
+
+        cout << "Usuwanie wartości z początku listy: ";
+        start = chrono::high_resolution_clock::now();
+        deleteFirst();
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl;
+
+
+        cout << "Usuwanie wartości z końca listy: ";
+        start = chrono::high_resolution_clock::now();
+        deleteLast();
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl;
+
+        cout << "Usuwanie wartości z losowego miejsca w listy: ";
+        start = chrono::high_resolution_clock::now();
+        deleteValueOnThePosition(rand() % 1000);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl << endl;
+
+        cout << "Wyszukiwanie losowej wartosci z listy:" << endl;
+        start = chrono::high_resolution_clock::now();
+        int rand_val = rand() % 1000000;
+        bool is_in = isValueInList(rand_val);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        if (is_in) cout << "Wartosc" << rand_val << " jest w listy " << endl;
+        else cout << "Wartosci: " << rand_val << " nie ma w listy " << endl;
+        cout << "Czas: " << diff.count() << endl << endl;
     }
 };

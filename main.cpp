@@ -153,18 +153,22 @@ void menu_list() {
             case 8: //tutaj znajdowanie elemetu w liscie
                 cout << "podaj wartosc:" << endl;
                 cin >> value;
+                if (myList.isValueInList(value)) cout << "podana wartosc jest w tablicy";
+                else cout << "podanej wartosci NIE ma w tablicy";
                 break;
 
             case 9:  //tutaj generowanie  tablicy
                 cout << "Podaj ilosc elementow tablicy:";
                 cin >> value;
+                myList.generateList(value);
                 break;
 
             case 10:  //tutaj wyświetlanie tablicy
                 myList.display();
                 break;
 
-            case '11': //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
+            case 11: //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
+                myList.test();
                 break;
         }
 

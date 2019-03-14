@@ -8,10 +8,12 @@ using namespace std;
 class List {
     ListElement *head;
     ListElement *tail;
+    int size;
 public:
     List() {
         head = NULL;
         tail = NULL;
+        size = 0;
     }
 
     ~List() {
@@ -30,6 +32,7 @@ public:
             tail->setNext(temp); // dodanie połączenia obecnego taila z nowym koncem
             tail = temp; // ustawienie taila na koniec
         }
+        ++size;
     }
 
     void addValueToTheStart(int value) {
@@ -37,9 +40,15 @@ public:
         temp->setNumber(value);
         temp->setNext(head); // ustawinie wskaznika na obecnie drugi element
         head = temp; // ustawienie head na pierwsza pozycje
+        ++size;
     }
 
     void addValueOnPosition(int value, int index) {
+        if(index >= size){
+            addValueToTheEnd(value);
+            return;
+        }
+
         ListElement *previous = new ListElement;
         ListElement *current = new ListElement;
         ListElement *temp = new ListElement;
@@ -51,6 +60,7 @@ public:
         temp->setNumber(value);
         previous->setNext(temp);
         temp->setNext(current);
+        ++size;
     }
 
     void deleteFirst() {
@@ -58,8 +68,10 @@ public:
         temp = head; // ustawienie obecneego heada na temp
         head = head->getNext(); // przestawienie head na kolojena pozycje
         delete temp;
+        --size;
     }
 
+    //zastanowic sie czy nie warto tutaj uzyc taila zamiast heada
     void deleteLast() {
         ListElement *current = new ListElement;
         ListElement *previous = new ListElement;
@@ -71,9 +83,15 @@ public:
         tail = previous; // przypisanie obecnego taila do przedostatniego elementu
         previous->setNext(NULL); // przedostatni element wskazuje na null -> staje sie ostatnim elementem
         delete current;
+        --size;
     }
 
     void deleteValueOnThePosition(int index) {
+        if(index >= size){
+            deleteLast();
+            return;
+        }
+
         ListElement *current = new ListElement;
         ListElement *previous = new ListElement;
         current = head;
@@ -83,6 +101,7 @@ public:
 
         }
         previous->setNext(current->getNext()); // pomieniecie elementu o danym indeksie
+        --size;
     }
 
     void display() {
@@ -125,9 +144,8 @@ public:
 
 
     void generateList(int size) {
-        srand(42);
         for (int i = 0; i < size; ++i) {
-            addValueToTheStart((rand() % 10) + 1);
+            addValueToTheEnd((rand() % 10) + 1);
         }
     }
 

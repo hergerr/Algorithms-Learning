@@ -1,5 +1,6 @@
 #include <iostream>
 #include<iomanip>
+#include<fstream>
 
 
 using namespace std;
@@ -39,7 +40,6 @@ public:
         *y = temp;
     }
 
-    void deleteKey(int i); // usuwa klucz z indeksu i
 
     void insertKey(int key) { // dodaje nowy klucz
         if (max_size == size) {
@@ -57,42 +57,80 @@ public:
         }
     }
 
-    void print() {
+    void loadFromFile(string fileName) {
+        int size;
+        ifstream inFile;
+        inFile.open(("../" + fileName));
+        if (!inFile) {
+            cout << "Nie można otworzyć pliku\n";
+            exit(1);
+        }
 
-        if (size == 0) {
-            cout << "brak elementow do wyswietlenia" << endl;
-            return;
+        inFile >> size;
+
+        int i = 0;
+        while (i++ < size) {
+            int number;
+            inFile >> number;
+            insertKey(number);
         }
-        cout << setw(40) << array[0] << endl << endl;
-        for (int i = 1; i < 3; i++) {
-            if (size > i) {
-                cout << setw(27);
-                if (array[i] != 0)
-                    cout << array[i];
-                else
-                    cout << 'x';
-            }
-        }
-        cout << endl << endl;
-        for (int i = 3; i < 7; i++) {
-            if (size > i) {
-                cout << setw(16);
-                if (array[i] != 0)
-                    cout << array[i];
-                else
-                    cout << 'x';
-            }
-        }
-        cout << endl << endl;
-        for (int i = 7; i < 16; i++) {
-            if (size > i) {
-                cout << setw(9);
-                if (array[i] != 0)
-                    cout << array[i];
-                else
-                    cout << 'x';;
-            }
-        }
-        cout << endl << endl;
     }
-};
+
+    bool isKeyInHeap(int k) {
+        int i = 0;
+        for (int i = 0; i < size; i++) {
+            if (k == array[i]) {
+                return true;
+
+            }
+        }
+        return false;
+    }
+
+    void generateHeap(int size) {
+        srand(42);
+        for (int i = 0; i < size; ++i) {
+            insertKey((rand() % 10) + 1);
+        }
+    }
+
+
+        void print() {
+
+            if (size == 0) {
+                cout << "brak elementow do wyswietlenia" << endl;
+                return;
+            }
+            cout << setw(40) << array[0] << endl << endl;
+            for (int i = 1; i < 3; i++) {
+                if (size > i) {
+                    cout << setw(27);
+                    if (array[i] != 0)
+                        cout << array[i];
+                    else
+                        cout << 'x';
+                }
+            }
+            cout << endl << endl;
+            for (int i = 3; i < 7; i++) {
+                if (size > i) {
+                    cout << setw(16);
+                    if (array[i] != 0)
+                        cout << array[i];
+                    else
+                        cout << 'x';
+                }
+            }
+            cout << endl << endl;
+            for (int i = 7; i < 16; i++) {
+                if (size > i) {
+                    cout << setw(9);
+                    if (array[i] != 0)
+                        cout << array[i];
+                    else
+                        cout << 'x';;
+                }
+            }
+            cout << endl << endl;
+        }
+    };

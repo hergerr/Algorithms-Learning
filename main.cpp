@@ -202,7 +202,7 @@ void menu_heap() {
             case 1: //tutaj wczytytwanie kopca z pliku
                 cout << "Podaj nazwe pliku: ";
                 cin >> fileName;
-//                myHeap.loadFromFile(fileName);
+                myHeap.loadFromFile(fileName);
                 break;
 
             case 2: //tutaj dodawanie do kopca
@@ -211,24 +211,24 @@ void menu_heap() {
                 myHeap.insertKey(value);
                 break;
 
-            case 3: //tutaj usuwanie elemenu z końca listy
+            case 3: //tutaj usuwanie elemenu z kopca
 //                myList.deleteLast();
                 break;
 
-            case 4: //tutaj znajdowanie elemetu w liscie
+            case 4: //tutaj znajdowanie elemetu w kopcu
                 cout << "podaj wartosc:" << endl;
                 cin >> value;
-//                if (myList.isValueInList(value)) cout << "podana wartosc jest w liscie";
-//                else cout << "podanej wartosci NIE ma w liscie";
+                if (myHeap.isKeyInHeap(value)) cout << "podana wartosc jest w kopcu";
+                else cout << "podanej wartosci NIE ma w kopcu";
                 break;
 
-            case 5:  //tutaj generowanie  tablicy
-                cout << "Podaj ilosc elementow liscie:";
+            case 5:  //tutaj generowanie  kopca
+                cout << "Podaj ilosc elementow w kopcu:";
                 cin >> value;
-//                myList.generateList(value);
+                myHeap.generateHeap(value);
                 break;
 
-            case 6:  //tutaj wyświetlanie tablicy
+            case 6:  //tutaj wyświetlanie kopca
                 myHeap.print();
                 break;
 

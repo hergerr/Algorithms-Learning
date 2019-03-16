@@ -5,6 +5,9 @@
 
 using namespace std;
 
+//todo deleting value
+//todo pointer to the back
+
 class List {
     ListElement *head;
     ListElement *tail;

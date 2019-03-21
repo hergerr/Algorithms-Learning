@@ -29,8 +29,8 @@ void displayMenu(string info) {
         cout << "6.Usun z poczatku" << endl;
         cout << "7.Usun z dowolnego miejsca" << endl;
         cout << "8.Znajdz element" << endl;
-        cout << "9.Generuj tablice" << endl;
-        cout << "10.Wyswietl tablice" << endl;
+        cout << "9.Generuj liste" << endl;
+        cout << "10.Wyswietl liste" << endl;
         cout << "11.Test" << endl;
         cout << "0.Powrot do menu" << endl;
         cout << "Podaj opcje:";

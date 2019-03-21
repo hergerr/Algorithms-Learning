@@ -24,30 +24,30 @@ public:
 
     //dodawanie na koniec
     void addValueToTheEnd(int value) {
-        ListElement *temp = new ListElement;
+        ListElement *temp = new ListElement();
         temp->setNumber(value);
-        temp->setNext(NULL);
-        if (head == NULL) { //ustawiamy head na poczatek i on tam bedzie zawsze
+        temp->setNext(NULL);        //ostatni element wskazuje na null
+
+        if (tail == NULL) {
             head = temp;
             tail = temp;
-            temp = NULL;
-        } else { // przestawiamy tail na koniec
-            tail->setNext(temp); // dodanie połączenia obecnego taila z nowym koncem
-            tail = temp; // ustawienie taila na koniec
+        } else {
+            tail->setNext(temp);    //ustawienie wskaznika na nowy element
+            tail = temp;            //przestawienie taila
         }
         ++size;
     }
 
     void addValueToTheStart(int value) {
-        ListElement *temp = new ListElement;
+        ListElement *temp = new ListElement();
         temp->setNumber(value);
-        temp->setNext(head); // ustawinie wskaznika na obecnie drugi element
-        head = temp; // ustawienie head na pierwsza pozycje
+        temp->setNext(head);        //ustawienie wskaznika temp na kolejny element
+        head = temp;                //ustawienie head na nowy poczatek
         ++size;
     }
 
     void addValueOnPosition(int value, int index) {
-        if(index >= size){
+        if (index >= size) {
             addValueToTheEnd(value);
             return;
         }
@@ -68,13 +68,13 @@ public:
 
     void deleteFirst() {
         ListElement *temp = new ListElement;
-        temp = head; // ustawienie obecneego heada na temp
-        head = head->getNext(); // przestawienie head na kolojena pozycje
+        temp = head;
         delete temp;
+        head = head->getNext();
         --size;
     }
 
-    //zastanowic sie czy nie warto tutaj uzyc taila zamiast heada
+
     void deleteLast() {
         ListElement *current = new ListElement;
         ListElement *previous = new ListElement;
@@ -83,14 +83,14 @@ public:
             previous = current;
             current = current->getNext();
         }
-        tail = previous; // przypisanie obecnego taila do przedostatniego elementu
-        previous->setNext(NULL); // przedostatni element wskazuje na null -> staje sie ostatnim elementem
+        tail = previous;            // przypisanie obecnego taila do przedostatniego elementu
+        previous->setNext(NULL);    // przedostatni element wskazuje na null -> staje sie ostatnim elementem
         delete current;
         --size;
     }
 
     void deleteValueOnThePosition(int index) {
-        if(index >= size){
+        if (index >= size) {
             deleteLast();
             return;
         }
@@ -111,7 +111,7 @@ public:
         ListElement *temp = new ListElement;
         temp = head;
         while (temp != NULL) {
-            cout << temp->getNumber() << endl;
+            cout << temp->getNumber() << " ";
             temp = temp->getNext();
         }
     }

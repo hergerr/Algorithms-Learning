@@ -22,11 +22,11 @@ public:
         return (i - 1) / 2;  // zwraca rodzica
     }
 
-    int leftSon(int i) {
+    int getLeftSon(int i) {
         return (2 * i + 1); //zwraca lewego syna
     }
 
-    int rightSon(int i) { //zwraca prawego syna
+    int getRightSon(int i) { //zwraca prawego syna
         return (2 * i + 2);
     }
 
@@ -41,20 +41,38 @@ public:
     }
 
 
-    void insertKey(int key) { // dodaje nowy klucz
-        if (max_size == size) {
-            cout << "Osiagnieto maksymalny rozmiar" << endl;
-            return;
+    void add(int value) {       // dodaje nowy klucz
+        int i = size++;         //pozycja nowego elementu -> rozmiar kopca + 1
+        int j = (i - 1) / 2;    //indeks rodzica wstawianego elementu
+
+        while (i > 0 && array[j] < value) { //dopki nie jestesmy w korzeniu i potencjalny rodzic jest mniejszy
+            array[i] = array[j];            //umiesc rodzica na miejscu syna
+            i = j;
+            j = (i - 1) / 2;                //idziemy 'w gore'
+        }
+        array[i] = value;       //wstawienie elementu do kopca
+    }
+
+    void deleteRoot() {
+        if (size == 0) return;
+
+        if (size--) { // zmniejszamy razmiar kopca
+            int value = array[size]; //ostatni element kopca
+
+            int i = 0; //obecny indeks przy przeszukiwaniu. Zaczynamy od korzenia
+            int j = 1; //pozycja lewego syna
+
+            while (j < size) {
+                if (j + 1 < size && array[j + 1] > array[j]) j++;   //szukamy wiekszego syna
+                if (value >= array[j]) break;                       //jesli wartosc jest wieksza od lewego syna to jest spelniowy warunek kopca
+                array[i] = array[j];                                //kopiowanie wiekszego syna do ojca
+                i = j;
+                j = 2 * j + 1;                                      //idziemy 'w dol'
+            }
+
+            array[i] = value;
         }
 
-        ++size;
-        int i = size - 1;
-        array[i] = key;
-
-        while (i != 0 && array[parent(i)] > array[i]) { // jesli syn jest wiekszy od ojca
-            swap(&array[i], &array[parent(i)]); // zamiana syna i ojca
-            i = parent(i); //idziemy w 'gore' drzewa
-        }
     }
 
     void loadFromFile(string fileName) {
@@ -72,7 +90,7 @@ public:
         while (i++ < size) {
             int number;
             inFile >> number;
-            insertKey(number);
+            add(number);
         }
     }
 
@@ -90,47 +108,36 @@ public:
     void generateHeap(int size) {
         srand(42);
         for (int i = 0; i < size; ++i) {
-            insertKey((rand() % 10) + 1);
+            add((rand() % 10) + 1);
         }
     }
 
+    //Funkcja do wypisywania drzewa binarnego
+    //źródło: https://eduinf.waw.pl/inf/alg/001_search/0113.php
+    void printBT(ostream & output, string sp, string sn, int v)
+    {
+        string s;
+        string cr,cl,cp;
 
-    void print() {
+        cr = cl = cp = "  ";
+        cr[0] = 218; cr[1] = 196;
+        cl[0] = 192; cl[1] = 196;
+        cp[0] = 179;
 
-        if (size == 0) {
-            cout << "brak elementow do wyswietlenia" << endl;
-            return;
+        if(v < size)
+        {
+            s = sp;
+            if(sn == cr) s[s.length() - 2] = ' ';
+            printBT(output, s + cp, cr, 2 * v + 2);
+
+            s = s.substr(0,sp.length()-2);
+
+            output << s << sn << array[v] << endl;
+
+            s = sp;
+            if(sn == cl) s[s.length() - 2] = ' ';
+            printBT(output, s + cp, cl, 2 * v + 1);
         }
-        cout << setw(40) << array[0] << endl << endl;
-        for (int i = 1; i < 3; i++) {
-            if (size > i) {
-                cout << setw(27);
-                if (array[i] != 0)
-                    cout << array[i];
-                else
-                    cout << 'x';
-            }
-        }
-        cout << endl << endl;
-        for (int i = 3; i < 7; i++) {
-            if (size > i) {
-                cout << setw(16);
-                if (array[i] != 0)
-                    cout << array[i];
-                else
-                    cout << 'x';
-            }
-        }
-        cout << endl << endl;
-        for (int i = 7; i < 16; i++) {
-            if (size > i) {
-                cout << setw(9);
-                if (array[i] != 0)
-                    cout << array[i];
-                else
-                    cout << 'x';;
-            }
-        }
-        cout << endl << endl;
     }
+
 };

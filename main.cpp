@@ -40,7 +40,7 @@ void displayMenu(string info) {
         cout << info << endl;
         cout << "1.Wczytaj z pliku" << endl;
         cout << "2.Dodaj" << endl;
-        cout << "3.Usun" << endl;
+        cout << "3.Usun korzen" << endl;
         cout << "4.Znajdz element" << endl;
         cout << "5.Generuj kopiec" << endl;
         cout << "6.Wyswietl kopiec" << endl;
@@ -215,11 +215,11 @@ void menu_heap() {
             case 2: //tutaj dodawanie do kopca
                 cout << "Podaj wartosc: ";
                 cin >> value;
-                myHeap.insertKey(value);
+                myHeap.add(value);
                 break;
 
             case 3: //tutaj usuwanie elemenu z kopca
-//                myList.deleteLast();
+                myHeap.deleteRoot();
                 break;
 
             case 4: //tutaj znajdowanie elemetu w kopcu
@@ -236,7 +236,7 @@ void menu_heap() {
                 break;
 
             case 6:  //tutaj wyświetlanie kopca
-                myHeap.print();
+                myHeap.printBT(cout ,"","", 0);
                 break;
 
             case 7: //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego

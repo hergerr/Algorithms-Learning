@@ -67,6 +67,9 @@ public:
     }
 
     void deleteFirst() {
+        if(head == NULL)
+            return;
+
         ListElement *temp = new ListElement;
         temp = head;
         delete temp;
@@ -74,13 +77,16 @@ public:
         --size;
     }
 
-
+//    TODO dzialanie dla 1 elementu
     void deleteLast() {
+        if(tail == NULL)
+            return;
+
         ListElement *temp = new ListElement;
         temp = tail;
+        delete temp;
         tail = tail->getPrevious();
         tail->setNext(NULL);
-        delete temp;
         --size;
     }
 
@@ -210,7 +216,14 @@ public:
 
         cout << "Usuwanie wartości z losowego miejsca w listy: ";
         start = chrono::high_resolution_clock::now();
-        deleteValueOnThePosition(rand() % 1000);
+        deleteValueOnThePosition(rand() % size);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl << endl;
+
+        cout << "Usuwanie losowej wartości: ";
+        start = chrono::high_resolution_clock::now();
+        deleteValue(rand() % size);
         end = chrono::high_resolution_clock::now();
         diff = end - start;
         cout << diff.count() << endl << endl;
@@ -221,8 +234,8 @@ public:
         bool is_in = isValueInList(rand_val);
         end = chrono::high_resolution_clock::now();
         diff = end - start;
-        if (is_in) cout << "Wartosc" << rand_val << " jest w listy " << endl;
-        else cout << "Wartosci: " << rand_val << " nie ma w listy " << endl;
+        if (is_in) cout << "Wartosc" << rand_val << " jest w liscie " << endl;
+        else cout << "Wartosci: " << rand_val << " nie ma w liscie " << endl;
         cout << "Czas: " << diff.count() << endl << endl;
     }
 

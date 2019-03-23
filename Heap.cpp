@@ -95,42 +95,42 @@ public:
     }
 
 
-        void print() {
+    void print() {
 
-            if (size == 0) {
-                cout << "brak elementow do wyswietlenia" << endl;
-                return;
-            }
-            cout << setw(40) << array[0] << endl << endl;
-            for (int i = 1; i < 3; i++) {
-                if (size > i) {
-                    cout << setw(27);
-                    if (array[i] != 0)
-                        cout << array[i];
-                    else
-                        cout << 'x';
-                }
-            }
-            cout << endl << endl;
-            for (int i = 3; i < 7; i++) {
-                if (size > i) {
-                    cout << setw(16);
-                    if (array[i] != 0)
-                        cout << array[i];
-                    else
-                        cout << 'x';
-                }
-            }
-            cout << endl << endl;
-            for (int i = 7; i < 16; i++) {
-                if (size > i) {
-                    cout << setw(9);
-                    if (array[i] != 0)
-                        cout << array[i];
-                    else
-                        cout << 'x';;
-                }
-            }
-            cout << endl << endl;
+        if (size == 0) {
+            cout << "brak elementow do wyswietlenia" << endl;
+            return;
         }
-    };
+        cout << setw(40) << array[0] << endl << endl;
+        for (int i = 1; i < 3; i++) {
+            if (size > i) {
+                cout << setw(27);
+                if (array[i] != 0)
+                    cout << array[i];
+                else
+                    cout << 'x';
+            }
+        }
+        cout << endl << endl;
+        for (int i = 3; i < 7; i++) {
+            if (size > i) {
+                cout << setw(16);
+                if (array[i] != 0)
+                    cout << array[i];
+                else
+                    cout << 'x';
+            }
+        }
+        cout << endl << endl;
+        for (int i = 7; i < 16; i++) {
+            if (size > i) {
+                cout << setw(9);
+                if (array[i] != 0)
+                    cout << array[i];
+                else
+                    cout << 'x';;
+            }
+        }
+        cout << endl << endl;
+    }
+};

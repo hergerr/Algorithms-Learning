@@ -27,8 +27,9 @@ public:
         ListElement *temp = new ListElement();
         temp->setNumber(value);
         temp->setNext(NULL);        //ostatni element wskazuje na null
+        temp->setPrevious(tail);     //ustawienie poprzedniego na tail, ktory niedlugo przestawimy
 
-        if (tail == NULL) {
+        if (size == 0) {
             head = temp;
             tail = temp;
         } else {
@@ -42,6 +43,7 @@ public:
         ListElement *temp = new ListElement();
         temp->setNumber(value);
         temp->setNext(head);        //ustawienie wskaznika temp na kolejny element
+        temp->setPrevious(NULL);    //w takim razie poprzedni to NULL
         head = temp;                //ustawienie head na nowy poczatek
         ++size;
     }
@@ -52,16 +54,14 @@ public:
             return;
         }
 
-        ListElement *previous = new ListElement;
         ListElement *current = new ListElement;
         ListElement *temp = new ListElement;
+        temp->setNumber(value);
         current = head;
         for (int i = 0; i < index; i++) {
-            previous = current;
             current = current->getNext();
         }
-        temp->setNumber(value);
-        previous->setNext(temp);
+        current->getPrevious()->setNext(temp);
         temp->setNext(current);
         ++size;
     }
@@ -76,16 +76,11 @@ public:
 
 
     void deleteLast() {
-        ListElement *current = new ListElement;
-        ListElement *previous = new ListElement;
-        current = head;
-        while (current->getNext() != NULL) {
-            previous = current;
-            current = current->getNext();
-        }
-        tail = previous;            // przypisanie obecnego taila do przedostatniego elementu
-        previous->setNext(NULL);    // przedostatni element wskazuje na null -> staje sie ostatnim elementem
-        delete current;
+        ListElement *temp = new ListElement;
+        temp = tail;
+        tail = tail->getPrevious();
+        tail->setNext(NULL);
+        delete temp;
         --size;
     }
 
@@ -96,14 +91,13 @@ public:
         }
 
         ListElement *current = new ListElement;
-        ListElement *previous = new ListElement;
         current = head;
         for (int i = 0; i < index; i++) {
-            previous = current;
             current = current->getNext();
 
         }
-        previous->setNext(current->getNext()); // pomieniecie elementu o danym indeksie
+        current->getPrevious()->setNext(current->getNext()); // pomieniecie elementu o danym indeksie
+        delete current;
         --size;
     }
 

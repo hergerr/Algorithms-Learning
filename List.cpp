@@ -89,6 +89,10 @@ public:
             deleteLast();
             return;
         }
+        if (index <= 0){
+            deleteFirst();
+            return;
+        }
 
         ListElement *current = new ListElement;
         current = head;
@@ -133,12 +137,25 @@ public:
         ListElement *current = new ListElement;
         current = head;
         while (current->getNext() != NULL) {
-            if ((*current).getNumber() == val) return true;
+            if (current->getNumber() == val) return true;
             current = current->getNext();
         }
         return false;
     }
 
+    void deleteValue(int val) {
+        ListElement *current = new ListElement;
+        current = head;
+        int counter = 0;
+        while (current->getNext() != NULL) {
+            if (current->getNumber() == val) {
+                deleteValueOnThePosition(counter);
+                return;
+            }
+            ++counter;
+            current = current->getNext();
+        }
+    }
 
     void generateList(int size) {
         for (int i = 0; i < size; ++i) {
@@ -208,4 +225,5 @@ public:
         else cout << "Wartosci: " << rand_val << " nie ma w listy " << endl;
         cout << "Czas: " << diff.count() << endl << endl;
     }
+
 };

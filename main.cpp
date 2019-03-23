@@ -6,7 +6,7 @@ using namespace std;
 
 
 void displayMenu(string info) {
-    if(info == "--- TABLICA ---"){
+    if (info == "--- TABLICA ---") {
         cout << endl;
         cout << info << endl;
         cout << "1.Wczytaj z pliku" << endl;
@@ -18,7 +18,7 @@ void displayMenu(string info) {
         cout << "7.Test (pomiary)" << endl;
         cout << "0.Powrot do menu" << endl;
         cout << "Podaj opcje:";
-    } else if (info == "--- LISTA ---"){
+    } else if (info == "--- LISTA ---") {
         cout << endl;
         cout << info << endl;
         cout << "1.Wczytaj z pliku" << endl;
@@ -28,13 +28,14 @@ void displayMenu(string info) {
         cout << "5.Usun z konca" << endl;
         cout << "6.Usun z poczatku" << endl;
         cout << "7.Usun z dowolnego miejsca" << endl;
-        cout << "8.Znajdz element" << endl;
-        cout << "9.Generuj liste" << endl;
-        cout << "10.Wyswietl liste" << endl;
-        cout << "11.Test" << endl;
+        cout << "8.Usun wartosc" << endl;
+        cout << "9.Znajdz element" << endl;
+        cout << "10.Generuj liste" << endl;
+        cout << "11.Wyswietl liste" << endl;
+        cout << "12.Test" << endl;
         cout << "0.Powrot do menu" << endl;
         cout << "Podaj opcje:";
-    } else if (info == "--- KOPIEC ---"){
+    } else if (info == "--- KOPIEC ---") {
         cout << endl;
         cout << info << endl;
         cout << "1.Wczytaj z pliku" << endl;
@@ -162,24 +163,30 @@ void menu_list() {
                 myList.deleteValueOnThePosition(index);
                 break;
 
-            case 8: //tutaj znajdowanie elemetu w liscie
+            case 8: //tutaj usuwanie elemenu o danej wartosci
+                cout << "Podaj wartosc: ";
+                cin >> value;
+                myList.deleteValue(value);
+                break;
+
+            case 9: //tutaj znajdowanie elemetu w liscie
                 cout << "podaj wartosc:" << endl;
                 cin >> value;
                 if (myList.isValueInList(value)) cout << "podana wartosc jest w liscie";
                 else cout << "podanej wartosci NIE ma w liscie";
                 break;
 
-            case 9:  //tutaj generowanie  tablicy
+            case 10:  //tutaj generowanie  listy
                 cout << "Podaj ilosc elementow liscie:";
                 cin >> value;
                 myList.generateList(value);
                 break;
 
-            case 10:  //tutaj wyświetlanie tablicy
+            case 11:  //tutaj wyświetlanie listy
                 myList.display();
                 break;
 
-            case 11: //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
+            case 12: //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
                 myList.test();
                 break;
         }

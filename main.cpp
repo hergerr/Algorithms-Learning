@@ -40,7 +40,7 @@ void displayMenu(string info) {
         cout << info << endl;
         cout << "1.Wczytaj z pliku" << endl;
         cout << "2.Dodaj" << endl;
-        cout << "3.Usun korzen" << endl;
+        cout << "3.Usun wartosc" << endl;
         cout << "4.Znajdz element" << endl;
         cout << "5.Generuj kopiec" << endl;
         cout << "6.Wyswietl kopiec" << endl;
@@ -219,6 +219,7 @@ void menu_heap() {
                 break;
 
             case 3: //tutaj usuwanie elemenu z kopca
+                cout << "podaj wartosc:" << endl;
                 cin >> value;
                 myHeap.deleteKey(value);
                 break;
@@ -226,7 +227,7 @@ void menu_heap() {
             case 4: //tutaj znajdowanie elemetu w kopcu
                 cout << "podaj wartosc:" << endl;
                 cin >> value;
-                if (myHeap.isKeyInHeap(value)) cout << "podana wartosc jest w kopcu";
+                if (myHeap.isKeyInHeap(value) != -1) cout << "podana wartosc jest w kopcu";
                 else cout << "podanej wartosci NIE ma w kopcu";
                 break;
 

@@ -42,15 +42,18 @@ public:
 
 
     void add(int value) {       // dodaje nowy klucz
-        int i = size++;         //pozycja nowego elementu -> rozmiar kopca + 1
+        int i = ++size;         //pozycja nowego elementu -> rozmiar kopca + 1
         int j = (i - 1) / 2;    //indeks rodzica wstawianego elementu
-
-        while (i > 0 && array[j] < value) { //dopki nie jestesmy w korzeniu i potencjalny rodzic jest mniejszy
-            array[i] = array[j];            //umiesc rodzica na miejscu syna
-            i = j;
-            j = (i - 1) / 2;                //idziemy 'w gore'
-        }
         array[i] = value;       //wstawienie elementu do kopca
+
+        while (i > 0 && array[j] < value) {
+            array[i] = array[j]*array[i];
+            array[j] = array[i]/array[j];
+            array[i] = array[j]/array[i];
+            i = j;
+            j = (j - 1) / 2;
+        }
+
     }
 
     void deleteRoot() {

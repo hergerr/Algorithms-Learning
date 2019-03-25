@@ -1,8 +1,15 @@
+#include <iostream>
+
 class ListElement {
     int number;
     ListElement *next;
     ListElement *previous;
 public:
+    ListElement(){
+        this->next = NULL;
+        this->previous = NULL;
+    }
+
     ListElement *getPrevious() const {
         return previous;
     }

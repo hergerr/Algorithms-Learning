@@ -26,22 +26,33 @@ public:
     void addValueToTheEnd(int value) {
         ListElement *temp = new ListElement();
         temp->setNumber(value);
-        temp->setNext(NULL);        //ostatni element wskazuje na null
-        temp->setPrevious(tail);     //ustawienie poprzedniego na tail, ktory niedlugo przestawimy
 
         if (size == 0) {
             head = temp;
             tail = temp;
-        } else {
-            tail->setNext(temp);    //ustawienie wskaznika na nowy element
-            tail = temp;            //przestawienie taila
+            ++size;
+            return;
         }
+
+        tail->setNext(temp);
+        temp->setNext(NULL);        //ostatni element wskazuje na null
+        temp->setPrevious(tail);     //ustawienie poprzedniego na tail, ktory niedlugo przestawimy
+        tail = temp;
         ++size;
     }
 
     void addValueToTheStart(int value) {
         ListElement *temp = new ListElement();
         temp->setNumber(value);
+
+        if (size == 0) {
+            head = temp;
+            tail = temp;
+            ++size;
+            return;
+        }
+
+        head->setPrevious(temp);
         temp->setNext(head);        //ustawienie wskaznika temp na kolejny element
         temp->setPrevious(NULL);    //w takim razie poprzedni to NULL
         head = temp;                //ustawienie head na nowy poczatek
@@ -54,7 +65,7 @@ public:
             return;
         }
 
-        ListElement *current = new ListElement;
+        ListElement *current;
         ListElement *temp = new ListElement;
         temp->setNumber(value);
         current = head;
@@ -67,25 +78,29 @@ public:
     }
 
     void deleteFirst() {
-        if(head == NULL)
+        if (size == 0)
             return;
 
-        ListElement *temp = new ListElement;
+        ListElement *temp;
         temp = head;
+
+        if (head->getNext() != NULL)
+            head = head->getNext();
+
         delete temp;
-        head = head->getNext();
+        head->setPrevious(NULL);
         --size;
     }
 
-//    TODO dzialanie dla 1 elementu
     void deleteLast() {
-        if(tail == NULL)
+        if (size == 0)
             return;
 
-        ListElement *temp = new ListElement;
+        ListElement *temp;
         temp = tail;
+        if (tail->getPrevious() != NULL)
+            tail = tail->getPrevious();
         delete temp;
-        tail = tail->getPrevious();
         tail->setNext(NULL);
         --size;
     }
@@ -95,7 +110,7 @@ public:
             deleteLast();
             return;
         }
-        if (index <= 0){
+        if (index <= 0) {
             deleteFirst();
             return;
         }
@@ -112,7 +127,7 @@ public:
     }
 
     void display() {
-        ListElement *temp = new ListElement;
+        ListElement *temp;
         temp = head;
         while (temp != NULL) {
             cout << temp->getNumber() << " ";

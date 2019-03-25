@@ -45,35 +45,46 @@ public:
         int i = ++size;         //pozycja nowego elementu -> rozmiar kopca + 1
         int j = (i - 1) / 2;    //indeks rodzica wstawianego elementu
         array[i] = value;       //wstawienie elementu do kopca
+        if (size == 1) return;
 
         while (i > 0 && array[j] < value) {
-            array[i] = array[j]*array[i];
-            array[j] = array[i]/array[j];
-            array[i] = array[j]/array[i];
+            swap(array + i, array + j);
             i = j;
             j = (j - 1) / 2;
         }
 
     }
 
-    void deleteRoot() {
-        if (size == 0) return;
+    void heapify(int index) {
+        if (index * 2 + 1 >= size) {
+            return;
+        }
+        int left_son = index * 2 + 1;
+        int maxIndex = left_son;
+        if (index * 2 + 2 < size) {
+            int right_son = index * 2 + 2;
+            if ( array[left_son] < array[right_son])
+                maxIndex = right_son;
+        }
 
-        if (size--) { // zmniejszamy razmiar kopca
-            int value = array[size]; //ostatni element kopca
+        swap(array + maxIndex, array + index);
+        heapify(maxIndex);
+    }
 
-            int i = 0; //obecny indeks przy przeszukiwaniu. Zaczynamy od korzenia
-            int j = 1; //pozycja lewego syna
-
-            while (j < size) {
-                if (j + 1 < size && array[j + 1] > array[j]) j++;   //szukamy wiekszego syna
-                if (value >= array[j]) break;                       //jesli wartosc jest wieksza od lewego syna to jest spelniowy warunek kopca
-                array[i] = array[j];                                //kopiowanie wiekszego syna do ojca
+    void deleteKey(int value) {
+        int index = isKeyInHeap(value);
+        if (index != -1) {
+            array[index] = array[--size];
+            int i = index;
+            int j = (i - 1) / 2;
+            while (i > 0 && array[j] < value) {
+                swap(array + i, array + j);
                 i = j;
-                j = 2 * j + 1;                                      //idziemy 'w dol'
+                j = (j - 1) / 2;
             }
-
-            array[i] = value;
+            if (i == index) {
+                heapify(index);
+            }
         }
 
     }
@@ -97,15 +108,15 @@ public:
         }
     }
 
-    bool isKeyInHeap(int k) {
+    int isKeyInHeap(int k) {
         int i = 0;
         for (int i = 0; i < size; i++) {
             if (k == array[i]) {
-                return true;
+                return i;
 
             }
         }
-        return false;
+        return -1;
     }
 
     void generateHeap(int size) {
@@ -117,28 +128,28 @@ public:
 
     //Funkcja do wypisywania drzewa binarnego
     //źródło: https://eduinf.waw.pl/inf/alg/001_search/0113.php
-    void printBT(ostream & output, string sp, string sn, int v)
-    {
+    void printBT(ostream &output, string sp, string sn, int v) {
         string s;
-        string cr,cl,cp;
+        string cr, cl, cp;
 
         cr = cl = cp = "  ";
-        cr[0] = 218; cr[1] = 196;
-        cl[0] = 192; cl[1] = 196;
+        cr[0] = 218;
+        cr[1] = 196;
+        cl[0] = 192;
+        cl[1] = 196;
         cp[0] = 179;
 
-        if(v < size)
-        {
+        if (v < size) {
             s = sp;
-            if(sn == cr) s[s.length() - 2] = ' ';
+            if (sn == cr) s[s.length() - 2] = ' ';
             printBT(output, s + cp, cr, 2 * v + 2);
 
-            s = s.substr(0,sp.length()-2);
+            s = s.substr(0, sp.length() - 2);
 
             output << s << sn << array[v] << endl;
 
             s = sp;
-            if(sn == cl) s[s.length() - 2] = ' ';
+            if (sn == cl) s[s.length() - 2] = ' ';
             printBT(output, s + cp, cl, 2 * v + 1);
         }
     }

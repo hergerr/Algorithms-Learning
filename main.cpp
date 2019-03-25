@@ -219,7 +219,8 @@ void menu_heap() {
                 break;
 
             case 3: //tutaj usuwanie elemenu z kopca
-                myHeap.deleteRoot();
+                cin >> value;
+                myHeap.deleteKey(value);
                 break;
 
             case 4: //tutaj znajdowanie elemetu w kopcu

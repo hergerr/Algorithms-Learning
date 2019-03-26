@@ -10,8 +10,12 @@ class Table {
 
 public:
 
-    void loadFromFile(string fileName) {
+    Table() {
+        size = 0;
+    }
 
+    void loadFromFile(string fileName) {
+        delete[] numbers;
         ifstream inFile;
         inFile.open(("../" + fileName));
         if (!inFile) {
@@ -26,17 +30,34 @@ public:
         while (i++ < size) {
             inFile >> numbers[i - 1];
         }
-
+        display();
     }
 
-    bool isValueInTable(int val) {
+    int isValueInTable(int val) {
         for (int i = 0; i < size; ++i) {
-            if (numbers[i] == val) return true;
+            if (numbers[i] == val) {
+                display();
+                return i;
+            }
         }
-        return false;
+        display();
+        return -1;
+    }
+
+    void addValueToTheStart(int val) {
+        addValue(0, val);
+    }
+
+    void addValueToTheEnd(int val) {
+        addValue(size, val);
     }
 
     void addValue(int index, int value) {
+        if(size == 0){
+            numbers = new int[1];
+            numbers[0] = value;
+        }
+
         int *newArray = new int[++size];
 
         if (index >= size) {
@@ -54,9 +75,20 @@ public:
 
         delete[] numbers;
         numbers = newArray;
+        display();
     }
 
     void deleteFromTable(int index) {
+        if (size <= 0)
+            return;
+        if(index >= size){
+            deleteLast();
+            return;
+        }
+        if(index < 0){
+            return;
+        }
+
         int *newArray = new int[--size];
 
         for (int i = 0; i < index; ++i) {
@@ -69,12 +101,26 @@ public:
         delete[] numbers;
 
         numbers = newArray;
+        display();
+    }
+
+    void deleteFirst() {
+        deleteFromTable(0);
+    }
+
+    void deleteLast() {
+        deleteFromTable(size - 1);
+    }
+
+    void deleteValue(int value){
+        if(isValueInTable(value) != -1){
+            deleteFromTable(isValueInTable(value));
+        } else return;
     }
 
     void display() {
-        cout << "Zawartosc tablicy:\n";
         for (int i = 0; i < size; i++) {
-            cout << numbers[i] << '\n';
+            cout << numbers[i] << ' ';
         }
     }
 
@@ -85,6 +131,7 @@ public:
         for (int i = 0; i < size; ++i) {
             numbers[i] = (rand() % 10) + 1;
         }
+        display();
     }
 
     void test() {

@@ -10,12 +10,17 @@ void displayMenu(string info) {
         cout << endl;
         cout << info << endl;
         cout << "1.Wczytaj z pliku" << endl;
-        cout << "2.Usun" << endl;
-        cout << "3.Dodaj" << endl;
-        cout << "4.Znajdz" << endl;
-        cout << "5.Utworz losowo" << endl;
-        cout << "6.Wyswietl" << endl;
-        cout << "7.Test (pomiary)" << endl;
+        cout << "2.Dodaj na koniec" << endl;
+        cout << "3.Dodaj na początek" << endl;
+        cout << "4.Dodaj na dowolna pozycje" << endl;
+        cout << "5.Usun z konca" << endl;
+        cout << "6.Usun z poczatku" << endl;
+        cout << "7.Usun z dowolnego miejsca" << endl;
+        cout << "8.Usun wartosc" << endl;
+        cout << "9.Znajdz element" << endl;
+        cout << "10.Generuj tablice" << endl;
+        cout << "11.Wyswietl tablice" << endl;
+        cout << "12.Test" << endl;
         cout << "0.Powrot do menu" << endl;
         cout << "Podaj opcje:";
     } else if (info == "--- LISTA ---") {
@@ -63,47 +68,70 @@ void menu_table() {
         cin >> opt;
         cout << endl;
         switch (opt) {
-            case 1: //tutaj wczytytwanie  tablicy z pliku
-                cout << "Podaj nazwe pliku:";
+            case 1: //tutaj wczytytwanie  listy z pliku
+                cout << "Podaj nazwe pliku: ";
                 cin >> fileName;
                 myTab.loadFromFile(fileName);
-                myTab.display();
                 break;
 
-            case 2: //tutaj usuwanie elemenu z tablicy
-                cout << "podaj index:";
-                cin >> index;
-                myTab.deleteFromTable(index);
-                myTab.display();
+            case 2: //tutaj dodawanie na koniec listy
+                cout << "Podaj wartosc: ";
+                cin >> value;
+                myTab.addValueToTheEnd(value);
                 break;
 
-            case 3: //tutaj dodawanie elemetu do tablicy
-                cout << "podaj index:";
+            case 3: //tutaj dodawanie na poczatek listy
+                cout << "Podaj wartosc: ";
+                cin >> value;
+                myTab.addValueToTheStart(value);
+                break;
+
+            case 4: //tutaj dodawanie na dowolna pozycja
+                cout << "podaj index: ";
                 cin >> index;
-                cout << "podaj wartosc:";
+                cout << "Podaj wartość: ";
                 cin >> value;
                 myTab.addValue(index, value);
                 break;
 
-            case 4: //tutaj znajdowanie elemetu w tablicy
+            case 5: //tutaj usuwanie elemenu z końca listy
+                myTab.deleteLast();
+                break;
+
+            case 6: //tutaj usuwanie elemenu z początku listy
+                myTab.deleteFirst();
+                break;
+
+            case 7: //tutaj usuwanie elemenu z dowolnego miejsca
+                cout << "Podaj index: ";
+                cin >> index;
+                myTab.deleteFromTable(index);
+                break;
+
+            case 8: //tutaj usuwanie elemenu o danej wartosci
+                cout << "Podaj wartosc: ";
+                cin >> value;
+                myTab.deleteValue(value);
+                break;
+
+            case 9: //tutaj znajdowanie elemetu w liscie
                 cout << "podaj wartosc:" << endl;
                 cin >> value;
-                if (myTab.isValueInTable(value)) cout << "podana wartosc jest w tablicy";
+                if (myTab.isValueInTable(value) != -1) cout << "\nPodana wartosc jest w tablicy";
                 else cout << "podanej wartosci NIE ma w tablicy";
                 break;
 
-            case 5:  //tutaj generowanie  tablicy
+            case 10:  //tutaj generowanie  listy
                 cout << "Podaj ilosc elementow tablicy:";
                 cin >> value;
                 myTab.generateTable(value);
+                break;
+
+            case 11:  //tutaj wyświetlanie listy
                 myTab.display();
                 break;
 
-            case 6:  //tutaj wyświetlanie tablicy
-                myTab.display();
-                break;
-
-            case 7: //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
+            case 12: //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
                 myTab.test();
                 break;
         }

@@ -36,11 +36,9 @@ public:
     int isValueInTable(int val) {
         for (int i = 0; i < size; ++i) {
             if (numbers[i] == val) {
-                display();
                 return i;
             }
         }
-        display();
         return -1;
     }
 
@@ -53,6 +51,9 @@ public:
     }
 
     void addValue(int index, int value) {
+        if(index < 0) index = 0;
+        if(index > size) index = size;
+
         if(size == 0){
             numbers = new int[1];
             numbers[0] = value;
@@ -79,13 +80,15 @@ public:
     }
 
     void deleteFromTable(int index) {
-        if (size <= 0)
+        if (size == 0){
             return;
+        }
         if(index >= size){
             deleteLast();
             return;
         }
         if(index < 0){
+            deleteFirst();
             return;
         }
 
@@ -113,8 +116,9 @@ public:
     }
 
     void deleteValue(int value){
-        if(isValueInTable(value) != -1){
-            deleteFromTable(isValueInTable(value));
+        int value_index = isValueInTable(value);
+        if(value_index != -1){
+            deleteFromTable(value_index);
         } else return;
     }
 

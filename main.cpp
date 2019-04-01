@@ -270,7 +270,7 @@ void menu_heap() {
                 break;
 
             case 7: //tutaj nasza funkcja do eksperymentów (pomiary czasów i generowanie daneych) - nie będzie testowana przez prowadzącego
-//                myList.test();
+                myHeap.test();
                 break;
         }
 

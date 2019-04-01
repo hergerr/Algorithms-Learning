@@ -238,7 +238,7 @@ public:
 
         cout << "Usuwanie losowej wartości: ";
         start = chrono::high_resolution_clock::now();
-        deleteValue(rand() % size);
+        deleteValue(rand() % (size + 1));
         end = chrono::high_resolution_clock::now();
         diff = end - start;
         cout << diff.count() << endl << endl;

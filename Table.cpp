@@ -184,7 +184,7 @@ public:
 
         cout << "Usuwanie wartości z losowego miejsca w tablicy: ";
         start = chrono::high_resolution_clock::now();
-        deleteFromTable(rand() % (size - 1));
+        deleteFromTable(rand() % (size));
         end = chrono::high_resolution_clock::now();
         diff = end - start;
         cout << diff.count() << endl << endl;
@@ -192,10 +192,10 @@ public:
         cout << "Wyszukiwanie losowej wartosci z tablicy:" << endl;
         start = chrono::high_resolution_clock::now();
         int rand_val = rand() % 1000000;
-        bool is_in = isValueInTable(rand_val);
+        int is_in = isValueInTable(rand_val);
         end = chrono::high_resolution_clock::now();
         diff = end - start;
-        if (is_in) cout << "Wartosc" << rand_val << " jest w tablicy " << endl;
+        if (is_in != -1) cout << "Wartosc" << rand_val << " jest w tablicy " << endl;
         else cout << "Wartosci: " << rand_val << " nie ma w tablicy " << endl;
         cout << "Czas: " << diff.count() << endl << endl;
 

@@ -1,6 +1,8 @@
 #include <iostream>
 #include<iomanip>
 #include<fstream>
+#include<chrono>
+
 
 
 using namespace std;
@@ -152,6 +154,38 @@ public:
             if (sn == cl) s[s.length() - 2] = ' ';
             printBT(output, s + cp, cl, 2 * v + 1);
         }
+    }
+
+    void test(){
+        auto start = chrono::high_resolution_clock::now();
+        printBT(cout ,"","", 0);
+        auto end = chrono::high_resolution_clock::now();
+        chrono::duration<double> diff = end - start;
+        cout << "Wypisywanie kopca: " << diff.count() << endl << endl;
+
+        cout << "Wstawianie losowej wartosci: ";
+        start = chrono::high_resolution_clock::now();
+        add(rand() % 100);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl << endl;
+
+        cout << "Usuwanie losowej wartości: ";
+        start = chrono::high_resolution_clock::now();
+        deleteKey(rand() % 100);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        cout << diff.count() << endl << endl;
+
+        cout << "Wyszukiwanie losowej wartosci:" << endl;
+        start = chrono::high_resolution_clock::now();
+        int rand_val = rand() % 1000000;
+        int is_in = isKeyInHeap(rand_val);
+        end = chrono::high_resolution_clock::now();
+        diff = end - start;
+        if (is_in != -1) cout << "Wartosc " << rand_val << " jest w kopcu " << endl;
+        else cout << "Wartosci: " << rand_val << " nie ma w liscie " << endl;
+        cout << "Czas: " << diff.count() << endl << endl;
     }
 
 };

@@ -139,7 +139,7 @@ public:
         if (head != NULL) {
             ListElement *current = head;
             while (current != NULL) {
-                ListElement* tmp = current->getNext();
+                ListElement *tmp = current->getNext();
                 delete current;
                 current = tmp;
 
@@ -195,7 +195,7 @@ public:
         if (head != NULL) {
             ListElement *current = head;
             while (current != NULL) {
-                ListElement* tmp = current->getNext();
+                ListElement *tmp = current->getNext();
                 delete current;
                 current = tmp;
 
@@ -211,75 +211,72 @@ public:
 
 
     void test() {
-        srand( time( NULL ) );
+        srand(time(NULL));
+        chrono::duration<double> display_dur, add_beg_dur, add_end_dur, add_rand_dur, rmv_beg_dur, rmv_end_dur, rm_rand_dur, find_dur;
+
+        for (int i = 0; i < 100; ++i) {
+            auto start = chrono::high_resolution_clock::now();
+            display();
+            auto end = chrono::high_resolution_clock::now();
+            chrono::duration<double> diff = end - start;
+            display_dur += diff;
+
+            start = chrono::high_resolution_clock::now();
+            addValueToTheStart(0);
+            end = chrono::high_resolution_clock::now();
+            diff = end - start;
+            add_beg_dur += diff;
 
 
-        auto start = chrono::high_resolution_clock::now();
-        display();
-        auto end = chrono::high_resolution_clock::now();
-        chrono::duration<double> diff = end - start;
-        cout << "Wypisywanie wartosci listy: " << diff.count() << endl << endl;
+            start = chrono::high_resolution_clock::now();
+            addValueToTheEnd(0);
+            end = chrono::high_resolution_clock::now();
+            diff = end - start;
+            add_end_dur += diff;
 
-        cout << "Wstawianie nowej wartości na początek: ";
-        start = chrono::high_resolution_clock::now();
-        addValueToTheStart(0);
-        end = chrono::high_resolution_clock::now();
-        diff = end - start;
-        cout << diff.count() << endl;
+            start = chrono::high_resolution_clock::now();
+            addValueOnPosition(0, rand() % size);
+            end = chrono::high_resolution_clock::now();
+            diff = end - start;
+            add_rand_dur += diff;
 
-
-        cout << "Wstawianie nowej wartości na koniec: ";
-        start = chrono::high_resolution_clock::now();
-        addValueToTheEnd(0);
-        end = chrono::high_resolution_clock::now();
-        diff = end - start;
-        cout << diff.count() << endl;
-
-        cout << "Wstawianie nowej wartości w losowe miejsce listy: ";
-        start = chrono::high_resolution_clock::now();
-        addValueOnPosition(0, rand() % 100);
-        end = chrono::high_resolution_clock::now();
-        diff = end - start;
-        cout << diff.count() << endl << endl;
-
-        cout << "Usuwanie wartości z początku listy: ";
-        start = chrono::high_resolution_clock::now();
-        deleteFirst();
-        end = chrono::high_resolution_clock::now();
-        diff = end - start;
-        cout << diff.count() << endl;
+            start = chrono::high_resolution_clock::now();
+            deleteFirst();
+            end = chrono::high_resolution_clock::now();
+            diff = end - start;
+            rmv_beg_dur += diff;
 
 
-        cout << "Usuwanie wartości z końca listy: ";
-        start = chrono::high_resolution_clock::now();
-        deleteLast();
-        end = chrono::high_resolution_clock::now();
-        diff = end - start;
-        cout << diff.count() << endl;
+            start = chrono::high_resolution_clock::now();
+            deleteLast();
+            end = chrono::high_resolution_clock::now();
+            diff = end - start;
+            rmv_end_dur += diff;
 
-        cout << "Usuwanie wartości z losowego miejsca w listy: ";
-        start = chrono::high_resolution_clock::now();
-        deleteValueOnThePosition(rand() % size);
-        end = chrono::high_resolution_clock::now();
-        diff = end - start;
-        cout << diff.count() << endl << endl;
+            start = chrono::high_resolution_clock::now();
+            deleteValueOnThePosition(rand() % size);
+            end = chrono::high_resolution_clock::now();
+            diff = end - start;
+            rm_rand_dur += diff;
 
-        cout << "Usuwanie losowej wartości: ";
-        start = chrono::high_resolution_clock::now();
-        deleteValue(rand() % (size + 1));
-        end = chrono::high_resolution_clock::now();
-        diff = end - start;
-        cout << diff.count() << endl << endl;
+            int rand_val = rand() % 100000;
+            start = chrono::high_resolution_clock::now();
+            int is_in = isValueInList(rand_val);
+            end = chrono::high_resolution_clock::now();
+            diff = end - start;
+            find_dur += diff;
+        }
 
-        cout << "Wyszukiwanie losowej wartosci z listy:" << endl;
-        start = chrono::high_resolution_clock::now();
-        int rand_val = rand() % 1000000;
-        bool is_in = isValueInList(rand_val);
-        end = chrono::high_resolution_clock::now();
-        diff = end - start;
-        if (is_in) cout << "Wartosc" << rand_val << " jest w liscie " << endl;
-        else cout << "Wartosci: " << rand_val << " nie ma w liscie " << endl;
-        cout << "Czas: " << diff.count() << endl << endl;
+        cout << "\nWypisywanie wartosci listy: " << (display_dur / 100).count() << endl;
+        cout << "Wstawianie nowej wartości na początek: " << (add_beg_dur / 100).count() << endl;
+        cout << "Wstawianie nowej wartości na koniec: " << (add_end_dur / 100).count() << endl;
+        cout << "Wstawianie nowej wartości w losowe miejsce w listy: " << (add_rand_dur / 100).count() << endl;
+        cout << "Usuwanie wartości z początku listy: " << (rmv_beg_dur / 100).count() << endl;
+        cout << "Usuwanie wartości z końca listy: " << (rmv_end_dur / 100).count() << endl;
+        cout << "Usuwanie wartości z losowego miejsca w listy: " << (rm_rand_dur / 100).count() << endl;
+        cout << "Wyszukiwanie losowej wartosci z listy: " << (find_dur / 100).count() << endl;
+
+
     }
 
 };

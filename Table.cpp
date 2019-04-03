@@ -156,29 +156,24 @@ public:
             end = chrono::high_resolution_clock::now();
             diff = end - start;
             add_beg_dur += diff;
-//        cout << diff.count() << endl;
-
 
             start = chrono::high_resolution_clock::now();
             addValue(size - 1, 0);
             end = chrono::high_resolution_clock::now();
             diff = end - start;
             add_end_dur += diff;
-//        cout << diff.count() << endl;
 
             start = chrono::high_resolution_clock::now();
             addValue(rand() % size, 0);
             end = chrono::high_resolution_clock::now();
             diff = end - start;
             add_rand_dur += diff;
-//        cout << diff.count() << endl << endl;
 
             start = chrono::high_resolution_clock::now();
             deleteFromTable(0);
             end = chrono::high_resolution_clock::now();
             diff = end - start;
-            rmv_beg_dur += diff;
-//        cout << diff.count() << endl;
+            rmv_beg_dur += diff;;
 
 
             start = chrono::high_resolution_clock::now();
@@ -186,14 +181,12 @@ public:
             end = chrono::high_resolution_clock::now();
             diff = end - start;
             rmv_end_dur += diff;
-//        cout << diff.count() << endl;
 
             start = chrono::high_resolution_clock::now();
             deleteFromTable(rand() % (size));
             end = chrono::high_resolution_clock::now();
             diff = end - start;
             rm_rand_dur += diff;
-//        cout << diff.count() << endl << endl;
 
             int rand_val = rand() % 100000;
             start = chrono::high_resolution_clock::now();
@@ -201,15 +194,13 @@ public:
             end = chrono::high_resolution_clock::now();
             diff = end - start;
             find_dur += diff;
-//        if (is_in != -1) cout << "Wartosc" << rand_val << " jest w tablicy " << endl;
-//        else cout << "Wartosci: " << rand_val << " nie ma w tablicy " << endl;
-//        cout << "Czas: " << diff.count() << endl << endl;
+
         }
 
         cout << "\nWypisywanie wartosci tablicy: " << (display_dur / 100).count() << endl;
         cout << "Wstawianie nowej wartości na początek: " << (add_beg_dur / 100).count() << endl;
         cout << "Wstawianie nowej wartości na koniec: " << (add_end_dur / 100).count() << endl;
-        cout << "Wstawianie nowej wartości w losowe miejsce w tablicy: " << (add_end_dur / 100).count() << endl;
+        cout << "Wstawianie nowej wartości w losowe miejsce w tablicy: " << (add_rand_dur / 100).count() << endl;
         cout << "Usuwanie wartości z początku tablicy: " << (rmv_beg_dur / 100).count() << endl;
         cout << "Usuwanie wartości z końca tablicy: " << (rmv_end_dur / 100).count() << endl;
         cout << "Usuwanie wartości z losowego miejsca w tablicy: " << (rm_rand_dur/100).count() << endl;

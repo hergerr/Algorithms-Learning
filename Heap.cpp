@@ -75,6 +75,12 @@ public:
     }
 
     void loadFromFile(string fileName) {
+        if(this->size != 0){
+            delete[] array;
+            this->size = 0;
+            array = new int[max_size];
+        }
+
         int size;
         ifstream inFile;
         inFile.open(("../" + fileName));
@@ -86,10 +92,11 @@ public:
         inFile >> size;
 
         int i = 0;
-        while (i++ < size) {
+        while (i < size) {
             int number;
             inFile >> number;
             add(number);
+            ++i;
         }
     }
 
@@ -105,6 +112,13 @@ public:
     }
 
     void generateHeap(int size) {
+        if(this->size != 0){
+            delete[] array;
+            this->size = 0;
+            array = new int[max_size];
+        }
+
+
         srand(42);
         for (int i = 0; i < size; ++i) {
             add((rand() % 10) + 1);
@@ -123,6 +137,7 @@ public:
         cl[0] = 192;
         cl[1] = 196;
         cp[0] = 179;
+
 
         if (v < size) {
             s = sp;

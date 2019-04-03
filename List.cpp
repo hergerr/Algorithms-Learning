@@ -211,6 +211,9 @@ public:
 
 
     void test() {
+        srand( time( NULL ) );
+
+
         auto start = chrono::high_resolution_clock::now();
         display();
         auto end = chrono::high_resolution_clock::now();

@@ -141,6 +141,8 @@ public:
     }
 
     void test(){
+        srand( time( NULL ) );
+
         auto start = chrono::high_resolution_clock::now();
         printBT(cout ,"","", 0);
         auto end = chrono::high_resolution_clock::now();

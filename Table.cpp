@@ -11,11 +11,12 @@ class Table {
 public:
 
     Table() {
+        numbers = NULL;
         size = 0;
     }
 
     void loadFromFile(string fileName) {
-        delete[] numbers;
+        if (numbers !=NULL) delete[] numbers;
         ifstream inFile;
         inFile.open(("../" + fileName));
         if (!inFile) {

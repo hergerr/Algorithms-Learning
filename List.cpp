@@ -179,6 +179,16 @@ public:
     }
 
     void generateList(int size) {
+        if (head != NULL) {
+            ListElement *current = new ListElement;
+            current = head;
+            while (current->getNext() != NULL) {
+                delete current->getPrevious();
+                current->setPrevious(NULL);
+
+            }
+            delete current;
+        }
         for (int i = 0; i < size; ++i) {
             addValueToTheEnd((rand() % 10) + 1);
         }

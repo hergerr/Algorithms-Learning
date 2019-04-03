@@ -20,22 +20,6 @@ public:
 
     }
 
-    int parent(int i) {
-        return (i - 1) / 2;  // zwraca rodzica
-    }
-
-    int getLeftSon(int i) {
-        return (2 * i + 1); //zwraca lewego syna
-    }
-
-    int getRightSon(int i) { //zwraca prawego syna
-        return (2 * i + 2);
-    }
-
-    int getMin() {  //zwraca korzen, czyli minimum
-        return array[0];
-    }
-
     void swap(int *x, int *y) {
         int temp = *x;
         *x = *y;

@@ -136,6 +136,19 @@ public:
     }
 
     void loadFromFile(string fileName) {
+        if (head != NULL) {
+            ListElement *current = head;
+            while (current != NULL) {
+                ListElement* tmp = current->getNext();
+                delete current;
+                current = tmp;
+
+            }
+            head = NULL;
+            tail = NULL;
+            this->size = 0;
+        }
+
         int size;
         ifstream inFile;
         inFile.open(("../" + fileName));
@@ -180,17 +193,19 @@ public:
 
     void generateList(int size) {
         if (head != NULL) {
-            ListElement *current = new ListElement;
-            current = head;
-            while (current->getNext() != NULL) {
-                delete current->getPrevious();
-                current->setPrevious(NULL);
+            ListElement *current = head;
+            while (current != NULL) {
+                ListElement* tmp = current->getNext();
+                delete current;
+                current = tmp;
 
             }
-            delete current;
+            head = NULL;
+            tail = NULL;
+            this->size = 0;
         }
         for (int i = 0; i < size; ++i) {
-            addValueToTheEnd((rand() % 10) + 1);
+            addValueToTheStart((rand() % 10) + 1);
         }
     }
 

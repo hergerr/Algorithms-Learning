@@ -31,7 +31,7 @@ public:
         while (i++ < size) {
             inFile >> numbers[i - 1];
         }
-        display();
+        //display();
     }
 
     int isValueInTable(int val) {
@@ -77,7 +77,7 @@ public:
 
         delete[] numbers;
         numbers = newArray;
-        display();
+        //display();
     }
 
     void deleteFromTable(int index) {
@@ -105,7 +105,7 @@ public:
         delete[] numbers;
 
         numbers = newArray;
-        display();
+        //display();
     }
 
     void deleteFirst() {
@@ -136,12 +136,12 @@ public:
         for (int i = 0; i < size; ++i) {
             numbers[i] = (rand() % 10) + 1;
         }
-        display();
+        //display();
     }
 
     void test() {
         auto start = chrono::high_resolution_clock::now();
-        display();
+        //display();
         auto end = chrono::high_resolution_clock::now();
         chrono::duration<double> diff = end - start;
         cout << "Wypisywanie wartosci tablicy: " << diff.count() << endl << endl;

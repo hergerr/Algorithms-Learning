@@ -24,75 +24,91 @@ public:
 
     //dodawanie na koniec
     void addValueToTheEnd(int value) {
-        ListElement *temp = new ListElement();
+        ListElement *temp = new ListElement();  //nowy element
         temp->setNumber(value);
 
-        if (size == 0) {
-            head = temp;
+        if (size == 0) {            //jesli dodajemy pierwszy element
+            head = temp;            //wtedy head i temp sa ustawione na ten sam element
             tail = temp;
             ++size;
+            display();
             return;
         }
 
-        tail->setNext(temp);
-        temp->setNext(NULL);        //ostatni element wskazuje na null
-        temp->setPrevious(tail);     //ustawienie poprzedniego na tail, ktory niedlugo przestawimy
-        tail = temp;
+        tail->setNext(temp);        //przestawienie wskaznika ostaniego element na nowy ostatni element
+        temp->setNext(NULL);        //nowy ostatni element wskazuje na null
+        temp->setPrevious(tail);    //ustawienie poprzedniego na element na ktory wskazuje tail
+        tail = temp;                //tail znow wskazuje na koniec
         ++size;
+        display();
     }
 
     void addValueToTheStart(int value) {
-        ListElement *temp = new ListElement();
+        ListElement *temp = new ListElement();  //nowy element
         temp->setNumber(value);
 
-        if (size == 0) {
+        if (size == 0) {            //podobnie jak powyzej, przypadek dla pierwszego elementu
             head = temp;
             tail = temp;
             ++size;
+            display();
             return;
         }
 
-        head->setPrevious(temp);
-        temp->setNext(head);        //ustawienie wskaznika temp na kolejny element
-        temp->setPrevious(NULL);    //w takim razie poprzedni to NULL
+        head->setPrevious(temp);    //ustawienie wskaznika pierwszego elementu na nowy pierwszy element
+        temp->setNext(head);        //ustawienie wskaznika nowego pierwszego elementu na
+        temp->setPrevious(NULL);    //poprzedni to NULL
         head = temp;                //ustawienie head na nowy poczatek
         ++size;
+        display();
     }
 
     void addValueOnPosition(int value, int index) {
-        if (index >= size) {
+        if (index >= size) {            //przypadek kiedy podany zostal indeks wiekszy niz rozmiar listy
             addValueToTheEnd(value);
+            return;
+        }
+
+        if (index <= 0) {                //zabezpieczenie przed za malym indeksem
+            addValueToTheStart(value);
             return;
         }
 
         ListElement *current;
         ListElement *temp = new ListElement;
-        temp->setNumber(value);
+        temp->setNumber(value);     //ustawiewnie wartosci nowego elemnetu
         current = head;
         for (int i = 0; i < index; i++) {
-            current = current->getNext();
+            current = current->getNext(); //dotarcie na zadana pozycje
         }
-        current->getPrevious()->setNext(temp);
-        temp->setNext(current);
+        current->getPrevious()->setNext(
+                temp);  //przestawienie wskaznika z poprzedniego elementu na ten ktory jest dodawany
+        temp->setNext(current);                 //ustawienie nastepnika dodawanego elementu
         ++size;
+        display();
     }
 
     void deleteFirst() {
-        if (size == 0)
+        if (size == 0)      //zabezpieczenie przed usuwaniem nieistniejacego elementu
             return;
 
         ListElement *temp;
         temp = head;
 
-        if (head->getNext() != NULL)
-            head = head->getNext();
+        if (head->getNext() != NULL) //jesli element na ktory wskazuje head nie wskazuje na null
+            head = head->getNext();  //przestaw head
 
         delete temp;
         head->setPrevious(NULL);
+        if (size == 1) { //jesli usuwa sie ostatni element to trzeba head i tail przestawic na null
+            head = NULL;
+            tail = NULL;
+        }
         --size;
+        display();
     }
 
-    void deleteLast() {
+    void deleteLast() {     //analogicznie do powyzszego
         if (size == 0)
             return;
 
@@ -102,41 +118,47 @@ public:
             tail = tail->getPrevious();
         delete temp;
         tail->setNext(NULL);
+        if (size == 1) {
+            head = NULL;
+            tail = NULL;
+        }
         --size;
+        display();
     }
 
     void deleteValueOnThePosition(int index) {
-        if (index >= size) {
+        if (index >= size) { //zabezpieczenie przed za duzym indeksem
             deleteLast();
             return;
         }
-        if (index <= 0) {
+        if (index <= 0) {   //zabezpieczenie przed za malym indeksem
             deleteFirst();
             return;
         }
 
         ListElement *current = new ListElement;
         current = head;
-        for (int i = 0; i < index; i++) {
+        for (int i = 0; i < index; i++) {   //dotarcie do zadanej pozycji
             current = current->getNext();
 
         }
         current->getPrevious()->setNext(current->getNext()); // pomieniecie elementu o danym indeksie
-        delete current;
+        delete current;   //usuniecie zadanego elementu
         --size;
+        display();
     }
 
     void display() {
         ListElement *temp;
         temp = head;
-        while (temp != NULL) {
+        while (temp != NULL) {  //dopoki nie dojdziemy do konca wyswietlamy element i idziemy dalej
             cout << temp->getNumber() << " ";
             temp = temp->getNext();
         }
     }
 
     void loadFromFile(string fileName) {
-        if (head != NULL) {
+        if (head != NULL) { //jesli lista nie jest pusta to usun wszystko co w niej jest
             ListElement *current = head;
             while (current != NULL) {
                 ListElement *tmp = current->getNext();
@@ -168,9 +190,10 @@ public:
     }
 
     bool isValueInList(int val) {
-        ListElement *current = new ListElement;
+        ListElement *current;
         current = head;
-        while (current->getNext() != NULL) {
+        display();
+        while (current->getNext() != NULL) {    //dopoki nie dotrzemy do konca, szukamy elementu o zadanej wartosci
             if (current->getNumber() == val) return true;
             current = current->getNext();
         }
@@ -178,21 +201,22 @@ public:
     }
 
     void deleteValue(int val) {
-        ListElement *current = new ListElement;
+        ListElement *current;
         current = head;
         int counter = 0;
-        while (current->getNext() != NULL) {
-            if (current->getNumber() == val) {
-                deleteValueOnThePosition(counter);
+        while (current != NULL) {
+            if (current->getNumber() == val) {  //wyszukiwanie zadanej wartosci
+                deleteValueOnThePosition(counter);  //usuniecie wartosci o danym indeksie
                 return;
             }
             ++counter;
             current = current->getNext();
         }
+        display();
     }
 
     void generateList(int size) {
-        if (head != NULL) {
+        if (head != NULL) { //usuniecie wszystkich elementow jesli lista jest niepusta
             ListElement *current = head;
             while (current != NULL) {
                 ListElement *tmp = current->getNext();

@@ -17,7 +17,7 @@ public:
     }
 
     void loadFromFile(string fileName) {
-        if (numbers != NULL) delete[] numbers;
+        if (numbers != NULL) delete[] numbers;  //jesli tablica jest niepusta to ja usuwamy
         ifstream inFile;
         inFile.open(("../" + fileName));
         if (!inFile) {
@@ -32,16 +32,18 @@ public:
         while (i++ < size) {
             inFile >> numbers[i - 1];
         }
-        //display();
+        display();
     }
 
     int isValueInTable(int val) {
-        for (int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) {    //pzeszukiwanie tablicy
             if (numbers[i] == val) {
+                display();
                 return i;
             }
         }
-        return -1;
+        display();
+        return -1;  //-1 to nieznalezienie elementu
     }
 
     void addValueToTheStart(int val) {
@@ -53,22 +55,17 @@ public:
     }
 
     void addValue(int index, int value) {
-        if (index < 0) index = 0;
-        if (index > size) index = size;
+        if (index < 0) index = 0;       //zabezpieczenie przed nieprawidlowymi danymi
+        if (index >= size) index = size;    //index = size, bo size niedlugo sie zwiekszy
 
         if (size == 0) {
             numbers = new int[1];
             numbers[0] = value;
         }
 
-        int *newArray = new int[++size];
+        int *newArray = new int[++size];    //nowa, wieksza tablica
 
-        if (index >= size) {
-            //dodawanie na koniec listy
-            index = size;
-
-        }
-        newArray[index] = value;
+        newArray[index] = value;             //przepisywanie do nowej tablicy
         for (int i = 0; i < index; i++) {
             newArray[i] = numbers[i];
         }
@@ -76,13 +73,13 @@ public:
             newArray[i] = numbers[i - 1];
         }
 
-        delete[] numbers;
-        numbers = newArray;
-        //display();
+        delete[] numbers;               //usuniecie starej tablicy
+        numbers = newArray;             //przypisanie wskaznika na nowa tablice
+        display();
     }
 
     void deleteFromTable(int index) {
-        if (size == 0) {
+        if (size == 0) {        //zabezpieczenia przed nieprawidlowymi danymi
             return;
         }
         if (index >= size) {
@@ -94,19 +91,19 @@ public:
             return;
         }
 
-        int *newArray = new int[--size];
+        int *newArray = new int[--size];    //nowa tablica o nowym rozmiarze
 
-        for (int i = 0; i < index; ++i) {
+        for (int i = 0; i < index; ++i) {   //przepisanie do nowej tablicy z pominieciem usuwanego elementu
             newArray[i] = numbers[i];
         }
         for (int i = index + 1; i <= size; ++i) {
             newArray[i - 1] = numbers[i];
         }
 
-        delete[] numbers;
+        delete[] numbers;   //usuniecie satarej tablicy
 
-        numbers = newArray;
-        //display();
+        numbers = newArray; //przypisanie wskaznika na nowa tablice
+        display();
     }
 
     void deleteFirst() {
@@ -119,7 +116,7 @@ public:
 
     void deleteValue(int value) {
         int value_index = isValueInTable(value);
-        if (value_index != -1) {
+        if (value_index != -1) {    //-1 jest zwaracane kiedy nie ma takiego elementu
             deleteFromTable(value_index);
         } else return;
     }
@@ -128,6 +125,7 @@ public:
         for (int i = 0; i < size; i++) {
             cout << numbers[i] << ' ';
         }
+        cout << endl;
     }
 
     void generateTable(int size) {
@@ -137,7 +135,7 @@ public:
         for (int i = 0; i < size; ++i) {
             numbers[i] = (rand() % 10) + 1;
         }
-        //display();
+        display();
     }
 
     void test() {

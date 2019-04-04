@@ -155,6 +155,7 @@ public:
             cout << temp->getNumber() << " ";
             temp = temp->getNext();
         }
+        cout << endl;
     }
 
     void loadFromFile(string fileName) {

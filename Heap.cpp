@@ -27,7 +27,7 @@ public:
 
 
     void add(int value) {       // dodaje nowy klucz
-        int i = ++size;         //pozycja nowego elementu -> rozmiar kopca + 1
+        int i = size++;         //pozycja nowego elementu -> rozmiar kopca + 1
         int j = (i - 1) / 2;    //indeks rodzica wstawianego elementu
         array[i] = value;       //wstawienie elementu do kopca
         if (size == 1) return;
@@ -37,7 +37,7 @@ public:
             i = j;                          //idziemy w gore. syn zajmuje miejsce ojca
             j = (j - 1) / 2;                //a ojciec idzie poziom wyzej
         }
-
+        printBT(cout, "", "", 0);
     }
 
     void heapify(int index) {               //kopcowanie
@@ -71,11 +71,11 @@ public:
                 heapify(index);     //kopcujemy w dol
             }
         }
-
+        printBT(cout, "", "", 0);
     }
 
     void loadFromFile(string fileName) {
-        if(this->size != 0){
+        if (this->size != 0) {
             delete[] array;
             this->size = 0;
             array = new int[max_size];
@@ -104,15 +104,17 @@ public:
         int i = 0;
         for (int i = 0; i < size; i++) {
             if (k == array[i]) {
+                printBT(cout, "", "", 0);
                 return i;
 
             }
         }
+        printBT(cout, "", "", 0);
         return -1;
     }
 
     void generateHeap(int size) {
-        if(this->size != 0){
+        if (this->size != 0) {
             delete[] array;
             this->size = 0;
             array = new int[max_size];
@@ -128,6 +130,10 @@ public:
     //Funkcja do wypisywania drzewa binarnego
     //źródło: https://eduinf.waw.pl/inf/alg/001_search/0113.php
     void printBT(ostream &output, string sp, string sn, int v) {
+//        for (int i = 0; i < size; ++i) {
+//            cout << "Index " << i << ": " << array[i] << endl;
+//        }
+
         string s;
         string cr, cl, cp;
 

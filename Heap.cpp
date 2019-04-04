@@ -52,7 +52,8 @@ public:
                 maxIndex = right_son;
         }
 
-        swap(array + maxIndex, array + index);  //zamiania syna z ojcem
+        if(array[maxIndex] > array[index])
+            swap(array + maxIndex, array + index);  //zamiania syna z ojcem
         heapify(maxIndex);                      //rekurencyjne zejscie w dol kopca
     }
 

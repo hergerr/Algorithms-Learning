@@ -75,7 +75,7 @@ public:
     }
 
     void loadFromFile(string fileName) {
-        if (this->size != 0) {
+        if (this->size != 0) { //jesli kopiec jest niepusty to usun go
             delete[] array;
             this->size = 0;
             array = new int[max_size];

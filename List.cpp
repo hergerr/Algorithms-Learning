@@ -81,8 +81,9 @@ public:
         for (int i = 0; i < index; i++) {
             current = current->getNext(); //dotarcie na zadana pozycje
         }
-        current->getPrevious()->setNext(
-                temp);  //przestawienie wskaznika z poprzedniego elementu na ten ktory jest dodawany
+        temp->setPrevious(current->getPrevious());
+        current->getPrevious()->setNext(temp);  //przestawienie wskaznika z poprzedniego elementu na ten ktory jest dodawany
+        current->setPrevious(temp);
         temp->setNext(current);                 //ustawienie nastepnika dodawanego elementu
         ++size;
         display();
@@ -143,6 +144,7 @@ public:
 
         }
         current->getPrevious()->setNext(current->getNext()); // pomieniecie elementu o danym indeksie
+        current->getNext()->setPrevious(current->getPrevious());
         delete current;   //usuniecie zadanego elementu
         --size;
         display();
@@ -154,6 +156,14 @@ public:
         while (temp != NULL) {  //dopoki nie dojdziemy do konca wyswietlamy element i idziemy dalej
             cout << temp->getNumber() << " ";
             temp = temp->getNext();
+        }
+        cout << endl;
+
+        ListElement *temp2;
+        temp2 = tail;
+        while(temp2 != NULL){
+            cout << temp2->getNumber() << " ";
+            temp2 = temp2->getPrevious();
         }
         cout << endl;
     }

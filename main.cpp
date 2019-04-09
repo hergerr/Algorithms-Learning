@@ -1,6 +1,7 @@
-#include "Table.cpp"
-#include "List.cpp"
-#include "Heap.cpp"
+#include "Table.h"
+#include "List.h"
+#include "Heap.h"
+
 
 using namespace std;
 

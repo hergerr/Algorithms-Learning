@@ -128,7 +128,7 @@ public:
     }
 
     void deleteValueOnThePosition(int index) {
-        if (index >= size) { //zabezpieczenie przed za duzym indeksem
+        if (index >= size - 1) { //zabezpieczenie przed za duzym indeksem
             deleteLast();
             return;
         }

@@ -63,7 +63,7 @@ public:
             array[index] = array[--size];   //zmniejeszenie rozmiaru tablicy w ktorej jest kopiec i wstawienie w miejsce usunietego elementu ostatniego elementu kopca
             int i = index;                  //syn
             int j = (i - 1) / 2;            //rodzic
-            while (i > 0 && array[j] < value) { //warunek kopca
+            while (i >= 0 && array[j] < array[i] ) { //warunek kopca
                 swap(array + i, array + j); //zamiana syna z ojcem
                 i = j;                      //syn staje zajmuje miejsce
                 j = (j - 1) / 2;            //ojciec idzie poziom wyzej

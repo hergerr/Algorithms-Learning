@@ -115,14 +115,15 @@ void List::deleteLast() {     //analogicznie do powyzszego
 }
 
 void List::deleteValueOnThePosition(int index) {
-    if (index >= size - 1) { //zabezpieczenie przed za duzym indeksem
-        deleteLast();
-        return;
-    }
     if (index <= 0) {   //zabezpieczenie przed za malym indeksem
         deleteFirst();
         return;
     }
+    if (index >= size - 1) { //zabezpieczenie przed za duzym indeksem
+        deleteLast();
+        return;
+    }
+
 
     ListElement *current = new ListElement;
     current = head;
@@ -191,7 +192,7 @@ bool List::isValueInList(int val) {
     ListElement *current;
     current = head;
     display();
-    while (current->getNext() != NULL) {    //dopoki nie dotrzemy do konca, szukamy elementu o zadanej wartosci
+    while (current != NULL) {    //dopoki nie dotrzemy do konca, szukamy elementu o zadanej wartosci
         if (current->getNumber() == val) return true;
         current = current->getNext();
     }
@@ -227,7 +228,7 @@ void List::generateList(int size) {
         this->size = 0;
     }
     for (int i = 0; i < size; ++i) {
-        addValueToTheStart((rand() % 10) + 1);
+        addValueToTheEnd((rand() % 10) + 1);
     }
 }
 
